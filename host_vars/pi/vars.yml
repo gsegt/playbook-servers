@@ -45,7 +45,3 @@ wireless:
 ethernet_interface: eth0
 
 bridge_interface: br0
-
-### Jellyfin
-
-jellyfin_media_root: "{{ samba.public.share }}/media"

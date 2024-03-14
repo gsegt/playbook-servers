@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+
+# Use the base qbittorrent image
+FROM lscr.io/linuxserver/qbittorrent:latest
+
+# Install required packages
+RUN apk upgrade
+RUN apk add --no-cache wireguard-tools iptables
+
+# Expose required ports
+EXPOSE 51820/udp
+
+# Copy the S6-overlay and WireGuard configuration files
+COPY /root /
+RUN chmod 600 /etc/wireguard/wg0.conf

@@ -48,6 +48,9 @@ samba:
 nfs_share:
   - "{{ data }}"
 
-### Jellyfin
+### Media Server
 
-jellyfin_media_root: "{{ samba.public.share }}/media"
+data: /storage/data/
+docker:
+  volumes: /docker/volumes/
+  infra: /docker/infra/

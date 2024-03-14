@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+
+[Interface]
+# Device: {{ wireguard.device_name }}
+PrivateKey = {{ wireguard.private_key }}
+Address = {{ wireguard.address }}
+DNS = {{ wireguard.dns }}
+PostUp = ip route add {{ network.local }} via $(ip route | grep default | awk '{print $3}'); iptables -I OUTPUT -d {{ network.local }} -j ACCEPT; iptables -I OUTPUT -d {{ network.docker }} -j ACCEPT; iptables -A OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT
+PreDown = ip route del {{ network.local }} via $(ip route | grep default | awk '{print $3}'); iptables -D OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT; iptables -D OUTPUT -d {{ network.local }} -j ACCEPT
+
+{% for peer in wireguard.peers %}
+[Peer]
+PublicKey = {{ peer.public_key }}
+AllowedIPs = {{ peer.allowed_ip }}
+Endpoint = {{ peer.end_point }}
+
+{% endfor %}

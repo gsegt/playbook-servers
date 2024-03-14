@@ -19,4 +19,4 @@
     - role: samba
     - role: nfs
     - role: docker
-    - role: jellyfin
+    - role: media-server

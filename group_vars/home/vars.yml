@@ -41,5 +41,9 @@ system_packages:
 
 timezone: Europe/Paris
 
+network:
+  local: 192.168.1.0/24
+  docker: 172.19.0.0/16
+
 debian_package_url: https://deb.debian.org/debian
 debian_security_url: https://security.debian.org/debian-security
