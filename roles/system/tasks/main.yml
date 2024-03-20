@@ -68,8 +68,15 @@
     dest: /etc/motd
     mode: "0644"
 
-- name: Disable cron e-mail notifications
+- name: Disable cron e-mail notifications for user root
   become: true
+  when: inventory_hostname in groups['servers']
+  ansible.builtin.cron:
+    name: MAILTO
+    env: true
+    job: ""
+
+- name: Disable cron e-mail notifications for user {{ ansible_user }}
   when: inventory_hostname in groups['servers']
   ansible.builtin.cron:
     name: MAILTO
