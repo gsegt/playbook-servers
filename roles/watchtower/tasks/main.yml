@@ -1,0 +1,17 @@
+---
+- name: Setup Watchtower
+  community.docker.docker_container:
+    name: watchtower
+    image: containrrr/watchtower:latest
+    env:
+      TZ: "{{ timezone }}"
+      WATCHTOWER_CLEANUP: "true"
+      WATCHTOWER_ROLLING_RESTART: "true"
+      WATCHTOWER_SCHEDULE: 0 0 4 * * *
+      WATCHTOWER_NOTIFICATIONS: shoutrrr
+      WATCHTOWER_NOTIFICATION_URL:
+        "smtp://{{ vault_email.user }}:{{ vault_email.password }}@{{ vault_email.smtp.host }}:{{ vault_email.smtp.startls }}/?\
+        from={{ vault_email.from }}&to={{ vault_email.to }}"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart_policy: unless-stopped

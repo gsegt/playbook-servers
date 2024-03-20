@@ -20,3 +20,4 @@
     - role: nfs
     - role: docker
     - role: media-server
+    - role: watchtower
