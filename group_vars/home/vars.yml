@@ -1,5 +1,5 @@
 ---
-### Environment variables
+### XDG Folders
 
 xdg_config_home: $HOME/.config
 xdg_cache_home: $HOME/.cache
@@ -7,19 +7,16 @@ xdg_data_home: $HOME/.local/share
 xdg_state_home: $HOME/.local/state
 xdg_bin_home: $HOME/.local/bin
 
-editor: nvim
-visual: nvim
-pager: less
+### Environment variables
 
-home_vars:
+home_env_vars:
   - XDG_CONFIG_HOME {{ xdg_config_home }}
   - XDG_CACHE_HOME {{ xdg_cache_home }}
   - XDG_DATA_HOME {{ xdg_data_home }}
   - XDG_STATE_HOME {{ xdg_state_home }}
   - XDG_BIN_HOME {{ xdg_bin_home }}
-  - VISUAL {{ visual }}
-  - EDITOR {{ editor }}
-  - PAGER {{ pager }}
+  - EDITOR nvim
+  - PAGER less
   - ANSIBLE_HOME $XDG_DATA_HOME/ansible
   - ANSIBLE_CONFIG $XDG_CONFIG_HOME/ansible.cfg
   - ANSIBLE_GALAXY_CACHE_DIR $XDG_CACHE_HOME/ansible/galaxy_cache
@@ -37,8 +34,6 @@ home_system_packages:
   - btrfs-progs
   - rsync
 
-### System
-
 timezone: Europe/Paris
 
 network:
@@ -50,7 +45,7 @@ debian_security_url: https://security.debian.org/debian-security
 
 ### Fish
 
-fish:
-  modules:
-    - jorgebucaran/autopair.fish
-    - jhillyerd/plugin-git
+fish_modules:
+  - jorgebucaran/autopair.fish
+  - jorgebucaran/replay.fish
+  - jhillyerd/plugin-git

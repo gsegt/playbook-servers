@@ -4,9 +4,14 @@
 set -g fish_greeting
 
 # Environemnt variables
-{% for var in home_vars %}
+{% for var in home_env_vars %}
 set -gx {{ var }}
 {% endfor %}
+{% if host_env_vars is defined %}
+{% for var in host_env_vars %}
+set -gx {{ var }}
+{% endfor %}
+{% endif %}
 
 # Update path
 fish_add_path {{ path | join(" ") }}

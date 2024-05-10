@@ -3,7 +3,7 @@
   hosts: home
   roles:
     - role: common.system
-    - role: fish
+    - role: common.fish
 
 - name: Configure servers hosts
   hosts: servers
