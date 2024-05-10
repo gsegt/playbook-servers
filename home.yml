@@ -15,7 +15,7 @@
 - name: Configure aspire server
   hosts: aspire
   roles:
-    - role: dropbear
+    - role: debian.dropbear
     - role: samba
     - role: nfs
     - role: docker
