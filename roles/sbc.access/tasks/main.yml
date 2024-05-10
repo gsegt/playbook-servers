@@ -1,4 +1,9 @@
 ---
+- name: Check if system is a Single Board Computer
+  ansible.builtin.fail:
+    msg: The system is not a Single Board Computer!
+  when: inventory_hostname in groups['sbc']
+
 - name: Install hostapd and rfkill
   become: true
   ansible.builtin.apt:
