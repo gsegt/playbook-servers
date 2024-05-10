@@ -10,7 +10,7 @@
   roles:
     - { role: geerlingguy.security, become: true }
     - { role: chriswayg.msmtp-mailer, become: true }
-    - role: unatended_upgrades
+    - role: debian.unatended-upgrades
 
 - name: Configure aspire server
   hosts: aspire
