@@ -17,7 +17,7 @@
   roles:
     - role: debian.dropbear
     - role: debian.samba
-    - role: nfs
+    - role: debian.nfs
     - role: docker
     - role: media-server
     - role: watchtower
