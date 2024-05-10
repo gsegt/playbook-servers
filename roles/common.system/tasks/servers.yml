@@ -1,0 +1,20 @@
+---
+- name: Disable part of ssh login messages
+  become: true
+  ansible.builtin.template:
+    src: motd.j2
+    dest: /etc/motd
+    mode: "0644"
+
+- name: Disable cron e-mail notifications for user root
+  become: true
+  ansible.builtin.cron:
+    name: MAILTO
+    env: true
+    job: ""
+
+- name: Disable cron e-mail notifications for user {{ ansible_user }}
+  ansible.builtin.cron:
+    name: MAILTO
+    env: true
+    job: ""

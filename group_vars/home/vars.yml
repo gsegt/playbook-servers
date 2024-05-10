@@ -29,7 +29,7 @@ path:
 
 ### System
 
-system_packages:
+home_system_packages:
   - neovim
   - less
   - curl

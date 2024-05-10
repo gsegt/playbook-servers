@@ -2,7 +2,7 @@
 - name: Configure all hosts
   hosts: home
   roles:
-    - role: system
+    - role: common.system
     - role: fish
 
 - name: Configure servers hosts
