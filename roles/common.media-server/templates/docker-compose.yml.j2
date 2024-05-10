@@ -1,8 +1,6 @@
 # {{ ansible_managed }}
 
 ---
-version: "Compose specification"
-
 services:
   radarr:
     container_name: radarr
@@ -16,7 +14,7 @@ services:
       - TZ={{ timezone }}
     volumes:
       - "{{ docker.volumes }}/radarr:/config"
-      - "{{ data}}:/data"
+      - "{{ data }}:/data"
 
   sonarr:
     container_name: sonarr
@@ -30,7 +28,7 @@ services:
       - TZ={{ timezone }}
     volumes:
       - "{{ docker.volumes }}/sonarr:/config"
-      - "{{ data}}:/data"
+      - "{{ data }}:/data"
 
   readarr:
     container_name: readarr
@@ -43,7 +41,7 @@ services:
       - TZ={{ timezone }}
     volumes:
       - "{{ docker.volumes }}/readarr:/config"
-      - "{{ data}}:/data"
+      - "{{ data }}:/data"
     restart: unless-stopped
 
   lidarr:
@@ -57,7 +55,7 @@ services:
       - TZ={{ timezone }}
     volumes:
       - "{{ docker.volumes }}/lidarr:/config"
-      - "{{ data}}:/data"
+      - "{{ data }}:/data"
     restart: unless-stopped
 
   bazarr:
@@ -72,7 +70,7 @@ services:
       - TZ={{ timezone }}
     volumes:
       - "{{ docker.volumes }}/bazarr:/config"
-      - "{{ data}}/media:/data/media"
+      - "{{ data }}/media:/data/media"
 
   prowlarr:
     container_name: prowlarr
@@ -113,7 +111,7 @@ services:
       - /dev/dri/renderD128:/dev/dri/renderD128
     volumes:
       - "{{ docker.volumes }}/jellyfin/config:/config"
-      - "{{ data}}/media:/data/media"
+      - "{{ data }}/media:/data/media"
 
   qbittorrent:
     container_name: qbittorrent
@@ -132,7 +130,7 @@ services:
       - WEBUI_PORT=8080
     volumes:
       - "{{ docker.volumes }}/qbittorrent/config:/config"
-      - "{{ data}}/torrents:/data/torrents"
+      - "{{ data }}/torrents:/data/torrents"
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
     ports:

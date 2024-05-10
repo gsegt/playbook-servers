@@ -19,5 +19,5 @@
     - role: debian.samba
     - role: debian.nfs
     - role: debian.docker
-    - role: media-server
+    - role: common.media-server
     - role: watchtower
