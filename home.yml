@@ -20,4 +20,4 @@
     - role: debian.nfs
     - role: debian.docker
     - role: common.media-server
-    - role: watchtower
+    - role: common.watchtower
