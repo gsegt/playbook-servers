@@ -16,7 +16,7 @@
   hosts: aspire
   roles:
     - role: debian.dropbear
-    - role: samba
+    - role: debian.samba
     - role: nfs
     - role: docker
     - role: media-server

@@ -1,4 +1,9 @@
 ---
+- name: Check if system is running Debian
+  ansible.builtin.fail:
+    msg: The system is not running Debian!
+  when: ansible_distribution != "Debian"
+
 - name: Install Samba
   become: true
   ansible.builtin.apt:
