@@ -6,7 +6,7 @@ PrivateKey = {{ wireguard.private_key }}
 Address = {{ wireguard.address }}
 DNS = {{ wireguard.dns }}
 PostUp = ip route add {{ local_network }} via $(ip route | grep default | awk '{print $3}'); iptables -I OUTPUT -d {{ local_network }} -j ACCEPT; iptables -I OUTPUT -d {{ docker_network }} -j ACCEPT; iptables -A OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT
-PreDown = ip route del {{ local_network }} via $(ip route | grep default | awk '{print $3}'); iptables -D OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT; iptables -D OUTPUT -d {{ local_network }} -j ACCEPT
+PreDown = iptables -D OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT; iptables -D OUTPUT -d {{ docker_network }} -j ACCEPT; iptables -D OUTPUT -d {{ local_network }} -j ACCEPT; ip route del {{ local_network }} via $(ip route | grep default | awk '{print $3}')
 
 {% for peer in wireguard.peers %}
 [Peer]
