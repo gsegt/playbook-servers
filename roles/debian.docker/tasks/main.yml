@@ -39,7 +39,7 @@
 - name: Add user to docker group
   become: true
   ansible.builtin.user:
-    name: "{{ username }}"
+    name: "{{ ansible_user }}"
     append: true
     groups: docker
   notify: Restart docker service

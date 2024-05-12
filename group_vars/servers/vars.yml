@@ -17,7 +17,7 @@ msmtp_alias_default: "{{ vault_email.from }}"
 ### SSH security (geerlingguy.security)
 
 security_sudoers_passwordless:
-  - "{{ username }}"
+  - "{{ ansible_user }}"
 security_autoupdate_enabled: false # Handled by a dedicated role
 
 ### Unattended upgrades

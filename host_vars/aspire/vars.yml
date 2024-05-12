@@ -1,17 +1,11 @@
 ---
 ### Ansible
 
-username: acer
-ip: 192.168.1.253
-ssh:
-  key: ~/.ssh/servers
-  port: 22
-
-ansible_host: "{{ ip }}"
-ansible_user: "{{ username }}"
+ansible_host: 192.168.1.253
+ansible_user: acer
 ansible_connection: ssh
-ansible_port: "{{ ssh.port }}"
-ansible_ssh_private_key_file: "{{ ssh.key }}"
+ansible_port: 22
+ansible_ssh_private_key_file: ~/.ssh/servers
 
 ### Firmware packages
 
@@ -42,7 +36,7 @@ dropbear:
 samba:
   private:
     share: "{{ data }}"
-    user: "{{ username }}"
+    user: "{{ ansible_user }}"
     password: "{{ vault_samba_password }}"
 
 nfs_share:
