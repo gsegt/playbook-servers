@@ -12,6 +12,6 @@ PreDown = ip route del {{ local_network }} via $(ip route | grep default | awk '
 [Peer]
 PublicKey = {{ peer.public_key }}
 AllowedIPs = {{ peer.allowed_ip }}
-Endpoint = {{ peer.end_point }}
+Endpoint = {{ peer.endpoint }}
 
 {% endfor %}
