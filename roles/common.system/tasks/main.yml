@@ -39,12 +39,6 @@
     - "{{ xdg_data_home }}"
     - "{{ xdg_state_home }}"
 
-- name: Install firmware packages
-  become: true
-  ansible.builtin.apt:
-    name: "{{ firmware_packages }}"
-  when: firmware_packages is defined
-
 - name: Install core system packages
   become: true
   ansible.builtin.package:

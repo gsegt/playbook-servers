@@ -25,3 +25,9 @@
   ansible.builtin.stat:
     path: /var/run/reboot-required
   register: system_reboot_required
+
+- name: Install firmware packages
+  become: true
+  ansible.builtin.apt:
+    name: "{{ firmware_packages }}"
+  when: firmware_packages is defined
