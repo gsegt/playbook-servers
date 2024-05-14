@@ -33,5 +33,3 @@
     stdin: "{{ starship_installer.content }}"
   register: starship_installed
   changed_when: starship_installed.rc != 0
-
-# TODO: Add install task for Cascadia Code font
