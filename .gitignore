@@ -3,3 +3,9 @@ vault.yml
 
 ### Python venv
 .venv/
+
+### Archived roles
+roles/00-archives/
+
+## debug files
+*debug*
