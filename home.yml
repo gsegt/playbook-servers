@@ -5,14 +5,14 @@
     - role: common.system
     - role: common.fish
 
-- name: Configure servers hosts
+- name: Configure all servers hosts
   hosts: servers
   roles:
     - { role: geerlingguy.security, become: true }
     - { role: chriswayg.msmtp-mailer, become: true }
     - role: debian.unatended-upgrades
 
-- name: Configure aspire server
+- name: Configure aspire host
   hosts: aspire
   roles:
     - role: debian.dropbear
