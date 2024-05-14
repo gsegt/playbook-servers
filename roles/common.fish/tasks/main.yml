@@ -3,6 +3,10 @@
   ansible.builtin.include_tasks: debian.yml
   when: ansible_distribution == "Debian"
 
+- name: Import Arch Linux tasks
+  ansible.builtin.include_tasks: archlinux.yml
+  when: ansible_distribution == "Archlinux"
+
 - name: Create all fish related folders
   ansible.builtin.file:
     path: "{{ xdg_config_home }}/fish/{{ item.path }}"

@@ -1,0 +1,8 @@
+---
+- name: Install fish shell, fisher module, starship prompt and Cascadia code berd font
+  kewlfft.aur.aur:
+    name:
+      - fish
+      - fisher
+      - starship
+      - ttf-noto-nerd

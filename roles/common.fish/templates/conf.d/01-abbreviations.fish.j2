@@ -17,4 +17,8 @@ if status is-interactive
     abbr -a sap "sudo apt purge"
     abbr -a safu "sudo apt full-upgrade"
 {% endif %}
+{% if ansible_distribution == "Archlinux" %}
+    abbr -a yeet "yay -Rns"
+    abbr -a flush "yay -Rns \$(yay -Qdtq)"
+{% endif %}
 end
