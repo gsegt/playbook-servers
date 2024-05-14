@@ -2,43 +2,57 @@
 
 This repository will hold playbooks for my pc and servers using ansible.
 
-## 1. Requirements
+- [Infra Playbooks](#infra-playbooks)
+  - [Requirements](#requirements)
+    - [SSH setup](#ssh-setup)
+    - [Set user as password less sudo](#set-user-as-password-less-sudo)
+    - [Install Ansible](#install-ansible)
+    - [Install ansible-galaxy requirements](#install-ansible-galaxy-requirements)
+    - [Creating a secret vault](#creating-a-secret-vault)
+    - [Extra variables](#extra-variables)
+  - [Using the ansible playbook](#using-the-ansible-playbook)
 
-### 1.1 General requirements
+## Requirements
+
+### SSH setup
 
 This setup assumes that you have key based ssh access to your server.
 To setup a new key, you can use the following.
 
-* Generate a new ssh key
+1. Generate a new ssh key
 
     ```sh
     ssh-keygen -t ed25516 -a 128 -f ~/.ssh/enter_your_custom_name
     ```
 
-*Note: You can use the ```-t rsa -b 4096``` option instead of ```-t ed25519``` to generate a key with comparable security and better compatibility at the price of creation and login performance*
-
-* Copy the ssh key to your server
+2. Copy the ssh key to your server
 
     ```sh
     ssh-copy-id -i /path/to/your/private/key/file username@ip_address
     ```
 
-## 1.2 Set user as password less sudo
+> [!NOTE]
+> You can use the ```-t rsa -b 4096``` option instead of ```-t ed25519``` to generate a key with comparable security and better compatibility at the price of creation and login performance
 
-Edit your sudoers file with and edit the line 50 to add passwordless sudo access to sudo group:
+### Set user as password less sudo
 
-```sh
-sudo visudo
-change this -> %sudo   ALL=(ALL:ALL) NOPASSWD: ALL
-```
+Run `EDITOR=nvim visudo -f /etc/sudoers.d/01_${username}` to create a drop in file for your user and add `${username} ALL=(ALL:ALL) NOPASSWD: ALL` to enjoy passwordless `sudo`
 
-### 1.3 Install Ansible
+### Install Ansible
 
 Install required python packages:
 
-```sh
-sudo apt install python-is-python3 python3-venv
-```
+- On Debian:
+
+    ```sh
+    sudo apt install python-is-python3 python3-venv
+    ```
+
+- On Arch Linux:
+
+    ```sh
+    sudo pacman -S python3
+    ```
 
 Create a virtual environment:
 
@@ -46,11 +60,19 @@ Create a virtual environment:
 python -m venv .venv
 ```
 
-Activate your venv
+Activate your venv:
 
-```sh
-source .venv/bin/activate (or activate.fish or activate.csh)
-```
+- With bash:
+
+  ```sh
+  source .venv/bin/activate
+  ```
+
+- With fish:
+
+  ```sh
+  source .venv/bin/activate.fish
+  ```
 
 Install required python modules:
 
@@ -58,7 +80,7 @@ Install required python modules:
 python -m pip install -U -r requirements.txt
 ```
 
-### 1.4 Install ansible-galaxy requirements
+### Install ansible-galaxy requirements
 
 Install the ansible requirements:
 
@@ -66,7 +88,7 @@ Install the ansible requirements:
 ansible-galaxy install -r requirements.yml
 ```
 
-### 1.5 Creating a secret vault
+### Creating a secret vault
 
 Create a new secret vault with ansible:
 
@@ -74,16 +96,14 @@ Create a new secret vault with ansible:
 ansible-vault create /secret/folder/path/vault.yml
 ```
 
-### 1.6 Extra variables
+### Extra variables
 
-Check for variable staring with "vault_" in the vars files.
+Check for variable staring with `vault_` in the vars files.
 
-## 2. Using the ansible playbook
+## Using the ansible playbook
 
 Run the playbook:
 
 ```sh
 ansible-playbook home.yml -i inventories/production.yml
 ```
-
-## Credits/Sources

@@ -2,6 +2,8 @@
 home:
   children:
     pc:
+      hosts:
+        opendan:
     servers:
       hosts:
         aspire:
@@ -10,5 +12,7 @@ home:
       hosts:
         aspire:
     desktops:
+      hosts:
+        opendan:
     vm:
     sbc:

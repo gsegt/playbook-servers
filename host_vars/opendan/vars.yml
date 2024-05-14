@@ -1,0 +1,25 @@
+---
+### Environment variables
+
+host_env_vars:
+  - VISUAL "code --wait"
+  - ELECTRON_OZONE_PLATFORM_HINT auto
+  - GTK_USE_PORTAL 1
+  - TEXMFVAR $XDG_CACHE_HOME/texlive/texmf-var
+  - GTK2_RC_FILES $XDG_CONFIG_HOME/gtk-2.0/gtkrc
+  - ANDROID_USER_HOME $XDG_DATA_HOME/android
+
+### Ansible
+
+ansible_user: ickule
+ansible_python_interpreter: auto_silent
+ansible_connection: local
+
+### Firmware packages
+
+firmware_packages:
+  - mkinitcpio-firmware
+
+### Hostname
+
+hostname: opendan
