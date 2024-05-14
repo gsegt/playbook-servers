@@ -3,6 +3,10 @@
   ansible.builtin.include_tasks: debian.yml
   when: ansible_distribution == "Debian"
 
+- name: Import Arch Linux tasks
+  ansible.builtin.include_tasks: archlinux.yml
+  when: ansible_distribution == "Archlinux"
+
 - name: Import servers tasks
   ansible.builtin.include_tasks: servers.yml
   when: inventory_hostname in groups['servers']
