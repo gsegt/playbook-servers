@@ -23,3 +23,11 @@ firmware_packages:
 ### Hostname
 
 hostname: opendan
+
+### Pacman
+
+pacman:
+  parallel_downloads: 10
+  countries:
+    - France
+  aur_helper: yay

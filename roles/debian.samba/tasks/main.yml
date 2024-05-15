@@ -19,6 +19,12 @@
     - Reboot
     - Add samba password to user
 
+- name: Enable smbd service
+  become: true
+  ansible.builtin.systemd:
+    name: smbd
+    enabled: true
+
 - name: Create samba folder for private share
   become: true
   ansible.builtin.file:
@@ -42,12 +48,6 @@
       writeable = yes
     backup: true
   notify: Restart smbd service
-
-- name: Enable smbd service
-  become: true
-  ansible.builtin.systemd:
-    name: smbd
-    enabled: true
 
 - name: Allow all handlers to run
   ansible.builtin.meta: flush_handlers

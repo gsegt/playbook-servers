@@ -21,3 +21,8 @@
     - role: debian.docker
     - role: common.media-server
     - role: common.watchtower
+
+- name: Configure opendan host
+  hosts: opendan
+  roles:
+    - role: arch.pacman
