@@ -27,3 +27,4 @@
   roles:
     - role: arch.pacman
     - role: arch.dotfiles
+    - role: arch.gpu-overclocking

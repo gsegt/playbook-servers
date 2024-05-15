@@ -1,0 +1,17 @@
+---
+- name: Check if system is running Archlinux
+  ansible.builtin.fail:
+    msg: The system is not running Archlinux!
+  when: ansible_distribution != "Archlinux"
+
+- name: Get GPU card number # noqa: no-changed-when
+  ansible.builtin.shell: set -o pipefail && ls /sys/class/drm | grep "^card[[:digit:]]$"
+  args:
+    executable: /bin/bash
+  register: card
+
+- name: Import amdfan tasks
+  ansible.builtin.include_tasks: amdfan.yml
+
+- name: Import amdgpu-clocks tasks
+  ansible.builtin.include_tasks: amdgpu-clocks.yml

@@ -1,0 +1,25 @@
+# {{ ansible_managed }}
+
+#Fan Control Matrix.
+# [<Temp in C>,<Fanspeed in %>]
+speed_matrix:
+{% for fan_speed_matrice in gpu_overclocking.fan_speed_matrix %}
+  - {{ fan_speed_matrice }}
+{% endfor %}
+
+# Current Min supported value is 4 due to driver bug
+#
+# Optional configuration options
+#
+# Allows for some leeway +/- temp, as to not constantly change fan speed
+# threshold: 4
+#
+# Frequency will change how often we probe for the temp
+# frequency: 5
+#
+# While frequency and threshold are optional, I highly recommend finding
+# settings that work for you. I've included the defaults I use above.
+#
+# cards:
+# can be any card returned from `ls /sys/class/drm | grep "^card[[:digit:]]$"`
+#  - {{ card.stdout }}

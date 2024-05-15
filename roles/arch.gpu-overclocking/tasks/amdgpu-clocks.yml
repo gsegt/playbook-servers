@@ -1,0 +1,41 @@
+---
+- name: Install amdgpu-clocks
+  kewlfft.aur.aur:
+    name:
+      - amdgpu-clocks-git
+
+- name: Copy amdgpu-clocks config
+  become: true
+  ansible.builtin.template:
+    src: amdgpu-custom-state.j2
+    dest: /etc/default/amdgpu-custom-state.{{ card.stdout }}
+    mode: "0644"
+  notify: Restart amdgpu-clocks service
+
+- name: Check if amdgpu.ppfeaturemask=0xfffd7fff is configured in the boot command
+  become: true
+  ansible.builtin.lineinfile:
+    path: /boot/loader/entries/{{ gpu_overclocking.systemd_boot_loader_file }}
+    regexp: "^options .* amdgpu.ppfeaturemask=0xfffd7fff"
+    state: absent
+  check_mode: true
+  register: boot_parameter_check
+  changed_when: false
+
+- name: Insert amdgpu.ppfeaturemask=0xfffd7fff in bootloader file if missing
+  become: true
+  ansible.builtin.lineinfile:
+    backrefs: true
+    path: /boot/loader/entries/{{ systemd_boot_loader_file }}
+    regexp: "^(options .*)$"
+    line: '\1 amdgpu.ppfeaturemask=0xfffd7fff'
+  when: boot_parameter_check.found == 0
+
+- name: Enable amdgpu-clocks service
+  become: true
+  ansible.builtin.service:
+    name: amdgpu-clocks
+    enabled: true
+
+- name: Allow all handlers to run
+  ansible.builtin.meta: flush_handlers

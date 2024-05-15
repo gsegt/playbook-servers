@@ -1,0 +1,26 @@
+---
+- name: Install amdfan
+  kewlfft.aur.aur:
+    name:
+      - amdfan
+
+- name: Copy amdfan custom service
+  become: true
+  ansible.builtin.template:
+    src: amdfan.service.j2
+    dest: /etc/systemd/system/amdfan.service
+    mode: "0644"
+
+- name: Enable amdfan service
+  become: true
+  ansible.builtin.service:
+    name: amdfan
+    enabled: true
+
+- name: Copy amdfan config
+  become: true
+  ansible.builtin.template:
+    src: amdfan.yml.j2
+    dest: /etc/amdfan.yml
+    mode: "0644"
+  notify: Restart amdfan service
