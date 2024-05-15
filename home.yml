@@ -26,3 +26,4 @@
   hosts: opendan
   roles:
     - role: arch.pacman
+    - role: arch.dotfiles

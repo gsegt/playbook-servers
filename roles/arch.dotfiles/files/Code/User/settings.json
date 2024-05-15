@@ -1,0 +1,58 @@
+{
+    //Test
+    // Common
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.eol": "\n",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit",
+        "source.organizeImports": "explicit"
+    },
+    // Markdown
+    "markdown.occurrencesHighlight.enabled": true,
+    "markdown.validate.enabled": true,
+    "markdown.extension.tableFormatter.normalizeIndentation": true,
+    "markdownlint.config": {
+        "MD024": {
+            "siblings_only": true
+        }
+    },
+    "markdown.extension.toc.orderedList": false,
+    "markdown.extension.toc.slugifyMode": "github",
+    "[markdown]": {
+        "editor.tabSize": 4
+    },
+    //LaTeX
+    "latex-workshop.latex.build.forceRecipeUsage": false,
+    "latex-workshop.latex.autoClean.run": "onFailed",
+    "workbench.editorAssociations": {
+        "*.pdf": "default"
+    },
+    //Spelling
+    "cSpell.language": "en-GB,fr",
+    // C
+    "cmake.configureOnOpen": true,
+    "cmake.showOptionsMovedNotification": false,
+    // Python
+    "python.terminal.activateEnvInCurrentTerminal": true,
+    //Personal
+    "telemetry.telemetryLevel": "off",
+    "redhat.telemetry.enabled": false,
+    "git.ignoreMissingGitWarning": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    // "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font",
+    "terminal.integrated.fontFamily": "NotoSansM Nerd Font Mono",
+    "terminal.integrated.copyOnSelection": true,
+    "workbench.startupEditor": "none",
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "editor.minimap.enabled": false,
+    "editor.wordWrap": "on",
+    "editor.unicodeHighlight.invisibleCharacters": false,
+    "editor.unicodeHighlight.ambiguousCharacters": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "git.openRepositoryInParentFolders": "never",
+    "git.autofetch": true,
+}
