@@ -1,0 +1,16 @@
+---
+- name: Check if system is running Archlinux
+  ansible.builtin.fail:
+    msg: The system is not running Archlinux!
+  when: ansible_distribution != "Archlinux"
+
+- name: Install all sensor packages
+  kewlfft.aur.aur:
+    name:
+      - linux-headers
+      - lm_sensors
+      - zenergy-dkms-git
+  notify: Detect sensors
+
+- name: Allow all handlers to run
+  ansible.builtin.meta: flush_handlers
