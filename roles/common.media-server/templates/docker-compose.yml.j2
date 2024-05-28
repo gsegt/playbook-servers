@@ -1,117 +1,89 @@
+---
 # {{ ansible_managed }}
 
----
+x-restart: &restart unless-stopped
+x-puid: &puid PUID={{ ansible_user_uid }}
+x-pgid: &pgid PGID={{ ansible_user_gid }}
+x-tz: &tz TZ={{ timezone }}
+x-data: &data "{{ media_server.data }}:/data"
+x-media: &media "{{ media_server.data }}/media:/data/media"
+x-torrents: &torrents "{{ media_server.data }}/torrents:/data/torrents"
+
+name: &name media-server
+
 services:
-  radarr:
-    container_name: radarr
-    image: lscr.io/linuxserver/radarr:latest
-    restart: unless-stopped
-    ports:
-      - 7878:7878
-    environment:
-      - PUID={{ ansible_user_uid }}
-      - PGID={{ ansible_user_gid }}
-      - TZ={{ timezone }}
-    volumes:
-      - "{{ docker.volumes }}/radarr:/config"
-      - "{{ data }}:/data"
-
-  sonarr:
-    container_name: sonarr
-    image: lscr.io/linuxserver/sonarr:latest
-    restart: unless-stopped
-    ports:
-      - 8989:8989
-    environment:
-      - PUID={{ ansible_user_uid }}
-      - PGID={{ ansible_user_gid }}
-      - TZ={{ timezone }}
-    volumes:
-      - "{{ docker.volumes }}/sonarr:/config"
-      - "{{ data }}:/data"
-
-  readarr:
-    container_name: readarr
-    image: lscr.io/linuxserver/readarr:develop
-    ports:
-      - 8787:8787
-    environment:
-      - PUID={{ ansible_user_uid }}
-      - PGID={{ ansible_user_gid }}
-      - TZ={{ timezone }}
-    volumes:
-      - "{{ docker.volumes }}/readarr:/config"
-      - "{{ data }}:/data"
-    restart: unless-stopped
-
-  lidarr:
-    container_name: lidarr
-    image: lscr.io/linuxserver/lidarr:latest
-    ports:
-      - 8686:8686
-    environment:
-      - PUID={{ ansible_user_uid }}
-      - PGID={{ ansible_user_gid }}
-      - TZ={{ timezone }}
-    volumes:
-      - "{{ docker.volumes }}/lidarr:/config"
-      - "{{ data }}:/data"
-    restart: unless-stopped
-
-  bazarr:
-    container_name: bazarr
+  bazarr-anime: &bazarr
+    container_name: bazarr-anime
     image: lscr.io/linuxserver/bazarr:latest
-    restart: unless-stopped
+    restart: *restart
     ports:
       - 6767:6767
     environment:
-      - PUID={{ ansible_user_uid }}
-      - PGID={{ ansible_user_gid }}
-      - TZ={{ timezone }}
+      - *puid
+      - *pgid
+      - *tz
     volumes:
-      - "{{ docker.volumes }}/bazarr:/config"
-      - "{{ data }}/media:/data/media"
+      - *media
+      - bazarr-anime-config:/config
 
-  prowlarr:
-    container_name: prowlarr
-    image: lscr.io/linuxserver/prowlarr:latest
-    restart: unless-stopped
+  bazarr-live-1080p:
+    <<: *bazarr
+    container_name: bazarr-live-1080p
     ports:
-      - 9696:9696
-    environment:
-      - PUID={{ ansible_user_uid }}
-      - PGID={{ ansible_user_gid }}
-      - TZ={{ timezone }}
+      - 6768:6767
     volumes:
-      - "{{ docker.volumes }}/prowlarr:/config"
+      - *media
+      - bazarr-live-1080p-config:/config
+
+  bazarr-live-2160p:
+    <<: *bazarr
+    container_name: bazarr-live-2160p
+    ports:
+      - 6769:6767
+    volumes:
+      - *media
+      - bazarr-live-2160p-config:/config
 
   flaresolverr:
     container_name: flaresolverr
     image: ghcr.io/flaresolverr/flaresolverr:latest
-    environment:
-      - TZ={{ timezone }}
+    restart: *restart
     ports:
       - 8191:8191
-    restart: unless-stopped
+    environment:
+      - *tz
 
   jellyfin:
     container_name: jellyfin
     image: lscr.io/linuxserver/jellyfin:latest
-    restart: unless-stopped
-    group_add:
-      - "{{ render_gid }}"
+    restart: *restart
     ports:
       - 8096:8096
     environment:
-      - PUID={{ ansible_user_uid }}
-      - PGID={{ ansible_user_gid }}
-      - TZ={{ timezone }}
+      - *puid
+      - *pgid
+      - *tz
       - DOCKER_MODS=linuxserver/mods:jellyfin-opencl-intel
+    volumes:
+      - *media
+      - jellyfin-config:/config
     devices:
       - /dev/dri/renderD128:/dev/dri/renderD128
+    group_add:
+      - "{{ render_gid }}"
+
+  prowlarr:
+    container_name: prowlarr
+    image: lscr.io/linuxserver/prowlarr:latest
+    restart: *restart
+    ports:
+      - 9696:9696
+    environment:
+      - *puid
+      - *pgid
+      - *tz
     volumes:
-      - "{{ docker.volumes }}/jellyfin/config:/config"
-      - "{{ data }}/media:/data/media"
+      - prowlarr-config:/config
 
   qbittorrent:
     container_name: qbittorrent
@@ -119,24 +91,121 @@ services:
       pull: true
       context: qbittorrent-wireguard
       dockerfile: Dockerfile
-    privileged: true
-    cap_add:
-      - NET_ADMIN
-    restart: unless-stopped
-    environment:
-      - PUID={{ ansible_user_uid }}
-      - PGID={{ ansible_user_gid }}
-      - TZ={{ timezone }}
-      - WEBUI_PORT=8080
-    volumes:
-      - "{{ docker.volumes }}/qbittorrent/config:/config"
-      - "{{ data }}/torrents:/data/torrents"
-    sysctls:
-      - net.ipv4.conf.all.src_valid_mark=1
+    restart: *restart
     ports:
       - 8080:8080
       - 6881:6881
       - 6881:6881/udp
       - 51820:51820/udp
+    environment:
+      - *puid
+      - *pgid
+      - *tz
+      - WEBUI_PORT=8080
+    volumes:
+      - *torrents
+      - qbittorrent-config:/config
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+
+  radarr-anime: &radarr
+    container_name: radarr-anime
+    image: lscr.io/linuxserver/radarr:latest
+    restart: *restart
+    ports:
+      - 7878:7878
+    environment:
+      - *puid
+      - *pgid
+      - *tz
+    volumes:
+      - *data
+      - radarr-anime-config:/config
+
+  radarr-live-1080p:
+    <<: *radarr
+    container_name: radarr-live-1080p
+    ports:
+      - 7879:7878
+    volumes:
+      - *data
+      - radarr-live-1080p-config:/config
+
+  radarr-live-2160p:
+    <<: *radarr
+    container_name: radarr-live-2160p
+    ports:
+      - 7880:7878
+    volumes:
+      - *data
+      - radarr-live-2160p-config:/config
+
+  sonarr-anime: &sonarr
+    container_name: sonarr-anime
+    image: lscr.io/linuxserver/sonarr:latest
+    restart: *restart
+    ports:
+      - 8989:8989
+    environment:
+      - *puid
+      - *pgid
+      - *tz
+    volumes:
+      - *data
+      - sonarr-anime-config:/config
+
+  sonarr-live-1080p:
+    <<: *sonarr
+    container_name: sonarr-live-1080p
+    ports:
+      - 8990:8989
+    volumes:
+      - *data
+      - sonarr-live-1080p-config:/config
+
+  sonarr-live-2160p:
+    <<: *sonarr
+    container_name: sonarr-live-2160p
+    ports:
+      - 8991:8989
+    volumes:
+      - *data
+      - sonarr-live-2160p-config:/config
+
+volumes:
+  bazarr-anime-config:
+    name: bazarr-anime-config
+  bazarr-live-1080p-config:
+    name: bazarr-live-1080p-config
+  bazarr-live-2160p-config:
+    name: bazarr-live-2160p-config
+  jellyfin-config:
+    name: jellyfin-config
+  prowlarr-config:
+    name: prowlarr-config
+  qbittorrent-config:
+    name: qbittorrent-config
+  radarr-anime-config:
+    name: radarr-anime-config
+  radarr-live-1080p-config:
+    name: radarr-live-1080p-config
+  radarr-live-2160p-config:
+    name: radarr-live-2160p-config
+  sonarr-anime-config:
+    name: sonarr-anime-config
+  sonarr-live-1080p-config:
+    name: sonarr-live-1080p-config
+  sonarr-live-2160p-config:
+    name: sonarr-live-2160p-config
+
+networks:
+  default:
+    name: *name
+    ipam:
+      config:
+        - subnet: "{{ media_server.subnet }}"

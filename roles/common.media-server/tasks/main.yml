@@ -14,12 +14,11 @@
     state: directory
     mode: "0755"
   with_items:
-    - "{{ docker.infra }}"
-    - "{{ docker.volumes }}"
+    - "{{ media_server.infra }}"
 
 - name: Create all docker infrastructure related folders
   ansible.builtin.file:
-    path: "{{ docker.infra }}/{{ item.path }}"
+    path: "{{ media_server.infra }}/{{ item.path }}"
     state: directory
     mode: "0755"
   with_community.general.filetree: "../templates"
@@ -28,7 +27,7 @@
 - name: Copy all docker files
   ansible.builtin.template:
     src: "{{ item.path }}"
-    dest: "{{ docker.infra }}/{{ item.path | replace('.j2', '') }}"
+    dest: "{{ media_server.infra }}/{{ item.path | replace('.j2', '') }}"
     mode: "0644"
   with_community.general.filetree: "../templates"
   when: item.state == 'file'
@@ -36,8 +35,6 @@
 - name: Start the media server services
   community.docker.docker_compose_v2:
     build: always
-    project_src: "{{ docker.infra }}"
+    project_src: "{{ media_server.infra }}"
     pull: always
     remove_orphans: true
-    remove_images: all
-    remove_volumes: true

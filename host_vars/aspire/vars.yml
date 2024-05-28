@@ -31,20 +31,20 @@ dropbear:
   authorized_keys:
     - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEf5Nt/JVAhptEaxDU/5Rdf284QswbVpKOOWFf7o5RAk ickule@opendan"
 
+### Media Server
+
+media_server:
+  infra: /opt/docker/media-server/
+  data: /media/external/data/
+  subnet: 172.31.255.0/24
+
 ### Network Sharing
 
 samba:
   private:
-    share: "{{ data }}"
+    share: "{{ media_server.data }}"
     user: "{{ ansible_user }}"
     password: "{{ vault_samba_password }}"
 
 nfs_share:
-  - "{{ data }}"
-
-### Media Server
-
-data: /storage/data/
-docker:
-  volumes: /docker/volumes/
-  infra: /docker/infra/
+  - "{{ media_server.data }}"
