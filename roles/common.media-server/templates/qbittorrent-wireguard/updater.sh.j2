@@ -1,0 +1,25 @@
+#/bin/bash
+
+compose_file_folder=$(dirname $(dirname $(readlink -f $0)))
+service_name=qbittorrent
+container_name=media-server-$service_name-1
+
+docker_pull_output=$(docker pull lscr.io/linuxserver/qbittorrent:latest)
+
+if [[ $docker_pull_output != *"Image is up to date"* ]] ; then
+    docker_compose_down_output=$(docker compose -f $compose_file_folder/docker-compose.yml down $container_name)
+    docker_compose_prune_output=$(docker image prune -a -f)
+    docker_compose_build_output=$(docker compose -f $compose_file_folder/docker-compose.yml build $service_name)
+    docker_compose_up_output=$(docker compose -f $compose_file_folder/docker-compose.yml up -d $service_name)
+    email_content="\
+        $docker_pull_output\n\n\
+        $docker_compose_down_output\n\n\
+        $docker_compose_prune_output\n\n\
+        $docker_compose_build_output\n\n\
+        $docker_compose_up_output\
+    "
+    echo -e ${email_content// /}
+    echo -e ${email_content// /} | mail -s "Custom $service_name container update" custom
+else
+    echo "Image is up to date"
+fi

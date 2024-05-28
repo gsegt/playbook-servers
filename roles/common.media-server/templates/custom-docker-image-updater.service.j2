@@ -1,0 +1,12 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=Custom docker image updater service
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /opt/docker/media-server/qbittorrent-wireguard/updater.sh
+
+[Install]
+WantedBy=multi-user.target

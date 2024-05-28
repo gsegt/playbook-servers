@@ -30,7 +30,13 @@
     dest: "{{ media_server.infra }}/{{ item.path | replace('.j2', '') }}"
     mode: "0644"
   with_community.general.filetree: "../templates"
-  when: item.state == 'file'
+  when:
+    - item.state == 'file'
+    - "'custom-docker-image-updater.timer.j2' not in item.path"
+    - "'custom-docker-image-updater.service.j2' not in item.path"
+
+- name: Import custom docker image updater tasks
+  ansible.builtin.include_tasks: custom-docker-image-updater.yml
 
 - name: Start the media server services
   community.docker.docker_compose_v2:
