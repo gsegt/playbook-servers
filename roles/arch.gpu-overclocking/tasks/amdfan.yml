@@ -24,3 +24,6 @@
     dest: /etc/amdfan.yml
     mode: "0644"
   notify: Restart amdfan service
+
+- name: Allow all handlers to run
+  ansible.builtin.meta: flush_handlers

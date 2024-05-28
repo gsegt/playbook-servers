@@ -30,3 +30,6 @@
     name: nfs-server
     enabled: true
     state: started
+
+- name: Allow all handlers to run
+  ansible.builtin.meta: flush_handlers
