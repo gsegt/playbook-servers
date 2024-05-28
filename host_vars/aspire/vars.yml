@@ -40,11 +40,12 @@ media_server:
 
 ### Network Sharing
 
+nfs:
+  share:
+    - "{{ media_server.data }}"
+
 samba:
   private:
     share: "{{ media_server.data }}"
     user: "{{ ansible_user }}"
     password: "{{ vault_samba_password }}"
-
-nfs_share:
-  - "{{ media_server.data }}"
