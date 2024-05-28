@@ -16,11 +16,11 @@
   hosts: aspire
   roles:
     - role: debian.dropbear
-    - role: debian.samba
-    - role: debian.nfs
     - role: debian.docker
     - role: common.media-server
     - role: common.watchtower
+    - role: debian.nfs
+    - role: debian.samba
 
 - name: Configure opendan host
   hosts: opendan
