@@ -1,0 +1,56 @@
+- name: Extract the Radarr Anime ApiKey
+  become: true
+  extract_xml_key_text:
+    xml_file_path: /var/lib/docker/volumes/radarr-anime-config/_data/config.xml
+    xml_key_xpath: ApiKey
+  register: radarr_anime_api
+
+- name: Extract the Radarr Live 1080p ApiKey
+  become: true
+  extract_xml_key_text:
+    xml_file_path: /var/lib/docker/volumes/radarr-live-1080p-config/_data/config.xml
+    xml_key_xpath: ApiKey
+  register: radarr_live_1080p_api
+
+- name: Extract the Radarr Live 2160p ApiKey
+  become: true
+  extract_xml_key_text:
+    xml_file_path: /var/lib/docker/volumes/radarr-live-2160p-config/_data/config.xml
+    xml_key_xpath: ApiKey
+  register: radarr_live_2160p_api
+
+- name: Extract the Sonarr Anime ApiKey
+  become: true
+  extract_xml_key_text:
+    xml_file_path: /var/lib/docker/volumes/sonarr-anime-config/_data/config.xml
+    xml_key_xpath: ApiKey
+  register: sonarr_anime_api
+
+- name: Extract the Sonarr Live 1080p ApiKey
+  become: true
+  extract_xml_key_text:
+    xml_file_path: /var/lib/docker/volumes/sonarr-live-1080p-config/_data/config.xml
+    xml_key_xpath: ApiKey
+  register: sonarr_live_1080p_api
+
+- name: Extract the Sonarr Live 2160p ApiKey
+  become: true
+  extract_xml_key_text:
+    xml_file_path: /var/lib/docker/volumes/sonarr-live-2160p-config/_data/config.xml
+    xml_key_xpath: ApiKey
+  register: sonarr_live_2160p_api
+
+- name: Copy recyclarr config
+  become: true
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: /var/lib/docker/volumes/recyclarr-config/_data/{{ item }}
+    mode: "0644"
+    owner: "{{ ansible_user_uid }}"
+    group: "{{ ansible_user_gid }}"
+  with_items:
+    - recyclarr.yml
+  notify: Sync recyclarr
+
+- name: Allow all handlers to run
+  ansible.builtin.meta: flush_handlers

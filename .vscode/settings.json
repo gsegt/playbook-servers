@@ -27,6 +27,13 @@
     "cSpell.language": "en-GB",
     // Python
     "python.terminal.activateEnvInCurrentTerminal": true,
+    "python.analysis.typeCheckingMode": "basic",
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.rulers": [
+            100
+        ],
+    },
     // Project specific
     "ansible.python.activationScript": "./.venv/bin/activate",
     "ansible.python.interpreterPath": "./.venv/bin/python",
@@ -34,6 +41,7 @@
         "*docker-compose*": "dockercompose",
         "*fish*": "fish",
         "*.yml": "ansible",
+        "*.yml.j2": "yaml",
     },
     "cSpell.words": [
         "activelow",

@@ -1,5 +1,14 @@
+# Essential
 pip
 wheel
 setuptools
+
+# Linting and formatting
+ruff
+
+# Test
+
+# Project
 ansible
 ansible-lint
+defusedxml

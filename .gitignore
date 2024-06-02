@@ -2,6 +2,8 @@
 vault.yml
 
 ### Python venv
+__pycache__/
+.ruff_cache/
 .venv/
 
 ### Archived roles

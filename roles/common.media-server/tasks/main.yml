@@ -34,6 +34,7 @@
     - item.state == 'file'
     - "'custom-docker-image-updater.timer.j2' not in item.path"
     - "'custom-docker-image-updater.service.j2' not in item.path"
+    - "'recyclarr.yml.j2' not in item.path"
 
 - name: Import custom docker image updater tasks
   ansible.builtin.include_tasks: custom-docker-image-updater.yml
@@ -44,3 +45,6 @@
     project_src: "{{ media_server.infra }}"
     pull: always
     remove_orphans: true
+
+- name: Import update recyclarr config tasks
+  ansible.builtin.include_tasks: update-recyclarr-config.yml

@@ -1,0 +1,5 @@
+---
+- name: Sync recyclarr
+  community.docker.docker_container_exec:
+    container: recyclarr
+    command: recyclarr sync

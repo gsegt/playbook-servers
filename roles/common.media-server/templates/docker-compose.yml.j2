@@ -145,6 +145,17 @@ services:
       - *data
       - radarr-live-2160p-config:/config
 
+  recyclarr:
+    container_name: recyclarr
+    image: ghcr.io/recyclarr/recyclarr:latest
+    restart: *restart
+    volumes:
+      - recyclarr-config:/config
+    environment:
+      - *tz
+      - RECYCLARR_CREATE_CONFIG=true
+    user: "{{ ansible_user_uid }}:{{ ansible_user_gid }}"
+
   sonarr-anime: &sonarr
     container_name: sonarr-anime
     image: lscr.io/linuxserver/sonarr:latest
@@ -196,6 +207,8 @@ volumes:
     name: radarr-live-1080p-config
   radarr-live-2160p-config:
     name: radarr-live-2160p-config
+  recyclarr-config:
+    name: recyclarr-config
   sonarr-anime-config:
     name: sonarr-anime-config
   sonarr-live-1080p-config:
