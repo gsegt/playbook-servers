@@ -2,30 +2,30 @@
 - name: Configure all hosts
   hosts: home
   roles:
-    - role: common.system
-    - role: common.fish
+    - role: system
+    - role: fish
 
 - name: Configure all servers hosts
   hosts: servers
   roles:
     - { role: geerlingguy.security, become: true }
     - { role: chriswayg.msmtp-mailer, become: true }
-    - role: debian.unatended-upgrades
+    - role: unatended-upgrades
 
 - name: Configure aspire host
   hosts: aspire
   roles:
-    - role: debian.dropbear
-    - role: debian.docker
-    - role: common.media-server
-    - role: common.watchtower
-    - role: debian.nfs
-    - role: debian.samba
+    - role: dropbear
+    - role: docker
+    - role: media-server
+    - role: watchtower
+    - role: nfs
+    - role: samba
 
 - name: Configure opendan host
   hosts: opendan
   roles:
-    - role: arch.pacman
-    - role: arch.dotfiles
-    - role: arch.gpu-overclocking
-    - role: arch.sensors
+    - role: pacman
+    - role: dotfiles
+    - role: gpu-overclocking
+    - role: sensors
