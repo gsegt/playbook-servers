@@ -29,3 +29,4 @@
     - role: dotfiles
     - role: gpu-overclocking
     - role: sensors
+    - role: automatic-shutdown
