@@ -42,6 +42,7 @@
         "*fish*": "fish",
         "*.yml": "ansible",
         "*.yml.j2": "yaml",
+        "*.sh.j2": "shellscript",
     },
     "cSpell.words": [
         "activelow",
