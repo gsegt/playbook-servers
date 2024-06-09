@@ -91,6 +91,7 @@ services:
       pull: true
       context: qbittorrent-wireguard
       dockerfile: Dockerfile
+    image: qbittorrent-wireguard:local
     restart: *restart
     ports:
       - 8080:8080
