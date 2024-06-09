@@ -1,5 +1,4 @@
 {
-    //Test
     // Common
     "files.trimFinalNewlines": true,
     "files.trimTrailingWhitespace": true,
@@ -55,4 +54,5 @@
     "diffEditor.ignoreTrimWhitespace": false,
     "git.openRepositoryInParentFolders": "never",
     "git.autofetch": true,
+    "update.showReleaseNotes": false,
 }
