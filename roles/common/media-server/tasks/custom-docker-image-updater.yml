@@ -1,11 +1,11 @@
 ---
-- name: Ensure systemd user folder exists
+- name: Ensure systemd user folders exist
   ansible.builtin.file:
     path: "{{ xdg_config_home }}/systemd/user"
     state: directory
     mode: '0755'
 
-- name: Copy custom docker image updater custom service and timer
+- name: Copy custom docker image updater service and timer
   ansible.builtin.template:
     src: "{{ item }}.j2"
     dest: "{{ xdg_config_home }}/systemd/user/{{ item }}"
@@ -14,8 +14,15 @@
     - custom-docker-image-updater.timer
     - custom-docker-image-updater.service
 
-- name: Enable custom docker image updater custom timer
+- name: Copy all custom docker image updater script
+  ansible.builtin.template:
+    src: "custom-docker-image-updater.sh.j2"
+    dest: "{{ xdg_bin_home }}/custom-docker-image-updater.sh"
+    mode: "0754"
+
+- name: Enable and start custom docker image updater custom timer
   ansible.builtin.service:
     name: custom-docker-image-updater.timer
     enabled: true
+    state: started
     scope: user

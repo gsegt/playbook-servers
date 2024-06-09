@@ -32,6 +32,7 @@
     - item.state == 'file'
     - "'custom-docker-image-updater.timer.j2' not in item.path"
     - "'custom-docker-image-updater.service.j2' not in item.path"
+    - "'custom-docker-image-updater.sh.j2' not in item.path"
     - "'recyclarr.yml.j2' not in item.path"
 
 - name: Import custom docker image updater tasks
