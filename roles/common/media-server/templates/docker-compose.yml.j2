@@ -85,8 +85,8 @@ services:
     volumes:
       - prowlarr-config:/config
 
-  qbittorrent:
-    container_name: qbittorrent
+  qbittorrent-wireguard:
+    container_name: qbittorrent-wireguard
     build:
       pull: true
       context: qbittorrent-wireguard
@@ -104,7 +104,7 @@ services:
       - WEBUI_PORT=8080
     volumes:
       - *torrents
-      - qbittorrent-config:/config
+      - qbittorrent-wireguard-config:/config
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
     privileged: true
@@ -199,8 +199,8 @@ volumes:
     name: jellyfin-config
   prowlarr-config:
     name: prowlarr-config
-  qbittorrent-config:
-    name: qbittorrent-config
+  qbittorrent-wireguard-config:
+    name: qbittorrent-wireguard-config
   radarr-anime-config:
     name: radarr-anime-config
   radarr-live-1080p-config:
