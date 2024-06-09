@@ -41,9 +41,7 @@
 
 - name: Start the media server services
   community.docker.docker_compose_v2:
-    build: always
     project_src: "{{ media_server.infra }}"
-    pull: always
     remove_orphans: true
 
 - name: Import update recyclarr config tasks

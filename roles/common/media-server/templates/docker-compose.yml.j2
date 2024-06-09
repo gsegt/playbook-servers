@@ -2,6 +2,7 @@
 # {{ ansible_managed }}
 
 x-restart: &restart unless-stopped
+x-pull_policy: &pull_policy always
 x-puid: &puid PUID={{ ansible_user_uid }}
 x-pgid: &pgid PGID={{ ansible_user_gid }}
 x-tz: &tz TZ={{ timezone }}
@@ -15,6 +16,7 @@ services:
   bazarr-anime: &bazarr
     container_name: bazarr-anime
     image: lscr.io/linuxserver/bazarr:latest
+    pull_policy: *pull_policy
     restart: *restart
     ports:
       - 6767:6767
@@ -47,6 +49,7 @@ services:
   flaresolverr:
     container_name: flaresolverr
     image: ghcr.io/flaresolverr/flaresolverr:latest
+    pull_policy: *pull_policy
     restart: *restart
     ports:
       - 8191:8191
@@ -56,6 +59,7 @@ services:
   jellyfin:
     container_name: jellyfin
     image: lscr.io/linuxserver/jellyfin:latest
+    pull_policy: *pull_policy
     restart: *restart
     ports:
       - 8096:8096
@@ -75,6 +79,7 @@ services:
   prowlarr:
     container_name: prowlarr
     image: lscr.io/linuxserver/prowlarr:latest
+    pull_policy: *pull_policy
     restart: *restart
     ports:
       - 9696:9696
@@ -92,6 +97,7 @@ services:
       context: qbittorrent-wireguard
       dockerfile: Dockerfile
     image: qbittorrent-wireguard:local
+    pull_policy: build
     restart: *restart
     ports:
       - 8080:8080
@@ -117,6 +123,7 @@ services:
   radarr-anime: &radarr
     container_name: radarr-anime
     image: lscr.io/linuxserver/radarr:latest
+    pull_policy: *pull_policy
     restart: *restart
     ports:
       - 7878:7878
@@ -149,6 +156,7 @@ services:
   recyclarr:
     container_name: recyclarr
     image: ghcr.io/recyclarr/recyclarr:latest
+    pull_policy: *pull_policy
     restart: *restart
     volumes:
       - recyclarr-config:/config
@@ -160,6 +168,7 @@ services:
   sonarr-anime: &sonarr
     container_name: sonarr-anime
     image: lscr.io/linuxserver/sonarr:latest
+    pull_policy: *pull_policy
     restart: *restart
     ports:
       - 8989:8989
