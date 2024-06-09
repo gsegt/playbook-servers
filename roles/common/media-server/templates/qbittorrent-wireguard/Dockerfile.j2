@@ -10,6 +10,12 @@ RUN apk add --no-cache wireguard-tools iptables
 # Expose required ports
 EXPOSE 51820/udp
 
+# Install vuetorrent UI
+RUN curl -fsSL "https://github.com/vuetorrent/vuetorrent/releases/latest/download/vuetorrent.zip" > "/tmp/vuetorrent.zip" && \
+    unzip "/tmp/vuetorrent.zip" -d / && \
+    rm "/tmp/vuetorrent.zip" && \
+    chmod -R u=rwX,go=rX "/vuetorrent"
+
 # Copy the S6-overlay and WireGuard configuration files
 COPY /root /
 RUN chmod 600 /etc/wireguard/wg0.conf
