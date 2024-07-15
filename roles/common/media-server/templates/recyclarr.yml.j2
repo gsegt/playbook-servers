@@ -71,15 +71,11 @@ radarr:
           - name: HD Bluray + WEB
 
       - trash_ids:
-          # Uncomment the next six lines to allow x265 HD releases with HDR/DV
-          # - dc98083864ea246d05a42df0d05f81cc # x265 (HD)
-        # quality_profiles:
-        # - name: HD Bluray + WEB
-        # score: 0
-        # - trash_ids:
-        # - 839bea857ed2c0a8e084f3cbdbd65ecb # x265 (no HDR/DV)
+          # Allow x265 in HD releases
+          - dc98083864ea246d05a42df0d05f81cc # x265 (HD)
         quality_profiles:
           - name: HD Bluray + WEB
+            score: 0
 
   radarr-live-2160p:
     base_url: http://radarr-live-2160p:7878
@@ -135,15 +131,11 @@ radarr:
           - name: UHD Bluray + WEB
 
       - trash_ids:
-          # Uncomment the next six lines to allow x265 HD releases with HDR/DV
-          # - dc98083864ea246d05a42df0d05f81cc # x265 (HD)
-        # quality_profiles:
-        # - name: UHD Bluray + WEB
-        # score: 0
-        # - trash_ids:
-        # - 839bea857ed2c0a8e084f3cbdbd65ecb # x265 (no HDR/DV)
+          # Allow x265 in HD releases
+          - dc98083864ea246d05a42df0d05f81cc # x265 (HD)
         quality_profiles:
           - name: UHD Bluray + WEB
+            score: 0
 
       - trash_ids:
           # Comment out the next line if you and all of your users' setups are fully DV compatible
@@ -226,15 +218,11 @@ sonarr:
           - name: WEB-1080p
 
       - trash_ids:
-          # Uncomment the next six lines to allow x265 HD releases with HDR/DV
-          # - 47435ece6b99a0b477caf360e79ba0bb # x265 (HD)
-        # quality_profiles:
-        # - name: WEB-1080p
-        # score: 0
-        # - trash_ids:
-        # - 9b64dff695c2115facf1b6ea59c9bd07 # x265 (no HDR/DV)
+          # Allow x265 in HD releases
+          - 47435ece6b99a0b477caf360e79ba0bb # x265 (HD)
         quality_profiles:
           - name: WEB-1080p
+            score: 0
 
   sonarr-live-2160p:
     base_url: http://sonarr-live-2160p:8989
@@ -270,15 +258,11 @@ sonarr:
           - name: WEB-2160p
 
       - trash_ids:
-          # Uncomment the next six lines to allow x265 HD releases with HDR/DV
-          # - 47435ece6b99a0b477caf360e79ba0bb # x265 (HD)
-        # quality_profiles:
-        # - name: WEB-2160p
-        # score: 0
-        # - trash_ids:
-        # - 9b64dff695c2115facf1b6ea59c9bd07 # x265 (no HDR/DV)
+          # Allow x265 in HD releases
+          - 47435ece6b99a0b477caf360e79ba0bb # x265 (HD)
         quality_profiles:
           - name: WEB-2160p
+            score: 0
 
       # Optional SDR
       # Only ever use ONE of the following custom formats:
