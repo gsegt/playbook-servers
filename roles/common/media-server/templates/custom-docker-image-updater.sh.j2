@@ -1,7 +1,10 @@
 #/usr/bin/sh
 
+# {{ ansible_managed }}
+
 compose_file={{ media_server.infra }}/docker-compose.yml
 service_name=qbittorrent-wireguard
+service_tag=local
 
 docker_pull_output=$(docker pull lscr.io/linuxserver/qbittorrent:latest)
 
@@ -9,14 +12,12 @@ if expr "$docker_pull_output" : '.*Image is up to date' > /dev/null ; then
     echo "Image is up to date"
 else
     docker_compose_down_output=$(docker compose -f $compose_file down $service_name)
-    docker_image_rm_output=$(docker image rm $service_name)
-    docker_compose_build_output=$(docker compose -f $compose_file build $service_name)
+    docker_image_rm_output=$(docker image prune -f)
     docker_compose_up_output=$(docker compose -f $compose_file up -d $service_name)
     email_content="\
         docker pull:> $docker_pull_output\n\n\
         docker compose down:> $docker_compose_down_output\n\n\
         docker image rm:> $docker_image_rm_output\n\n\
-        docker compose build:> $docker_compose_build_output\n\n\
         docker compose up:> $docker_compose_up_output\
     "
     echo $email_content
