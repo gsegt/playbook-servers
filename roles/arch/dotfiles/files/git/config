@@ -1,8 +1,6 @@
-# {{ ansible_managed }}
-
 [user]
-	name = ickule
-	email = 117572745+ickule@users.noreply.github.com
+	name = gsegt
+	email = git@gsegt.eu
 [pull]
 	rebase = true
 [core]
