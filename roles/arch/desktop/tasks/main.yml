@@ -1,0 +1,60 @@
+---
+- name: Check if system is running Archlinux
+  ansible.builtin.fail:
+    msg: The system is not running Archlinux!
+  when: ansible_distribution != "Archlinux"
+
+- name: Install NetworkManager for network
+  kewlfft.aur.aur:
+    name:
+      - networkmanager
+
+- name: Enable NetworkManager service
+  become: true
+  ansible.builtin.systemd:
+    name: NetworkManager
+    enabled: true
+
+- name: Install Pipewire packages for sound
+  kewlfft.aur.aur:
+    name:
+      - pipewire
+
+- name: Install Pipewire dependecies
+  kewlfft.aur.aur:
+    name:
+      - pipewire-alsa
+      - pipewire-audio
+      - pipewire-jack
+      - pipewire-pulse
+      - gst-plugin-pipewire
+      - wireplumber
+    use: "{{ pacman.aur_helper }}"
+    extra_args:
+      - --asdeps
+
+- name: Install KDE packages
+  kewlfft.aur.aur:
+    name:
+      - konsole # Terminal emulator
+      - plasma-meta # Plasma desktop
+      - xwaylandvideobridge # xwayland screen sharing
+
+- name: Install KDE dependencies
+  kewlfft.aur.aur:
+    name:
+      - xdg-desktop-portal-gtk
+    use: "{{ pacman.aur_helper }}"
+    extra_args:
+      - --asdeps
+
+- name: Install system apps
+  kewlfft.aur.aur:
+    name: "{{ item }}"
+  with_items: "{{ desktop.system_apps }}"
+
+- name: Enable SDDM service
+  become: true
+  ansible.builtin.systemd:
+    name: sddm
+    enabled: true

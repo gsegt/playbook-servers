@@ -30,3 +30,4 @@
     - role: gpu-overclocking
     - role: sensors
     - role: automatic-shutdown
+    - role: desktop

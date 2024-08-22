@@ -46,3 +46,18 @@ gpu_overclocking:
     - [60, 25]
     - [80, 40]
     - [95, 100]
+
+### desktop
+
+desktop:
+  system_apps:
+    - ark # Archive manager
+    - dolphin # File manager
+    - kcalc # Calculator
+    - spectacle # Screenshot utility
+    - gwenview # Image viewer
+    - firefox # Web Browser
+    - vlc # Video and music player
+    - hunspell # System wide spell checker
+    - hunspell-en_gb # English spell check support
+    - hunspell-fr # French spell check support
