@@ -8,6 +8,7 @@ host_env_vars:
   - TEXMFVAR $XDG_CACHE_HOME/texlive/texmf-var
   - GTK2_RC_FILES $XDG_CONFIG_HOME/gtk-2.0/gtkrc
   - ANDROID_USER_HOME $XDG_DATA_HOME/android
+  - GNUPGHOME $XDG_DATA_HOME/gnupg
 
 ### Ansible
 
