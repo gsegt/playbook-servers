@@ -1,0 +1,75 @@
+---
+- name: Check if system is running Archlinux
+  ansible.builtin.fail:
+    msg: The system is not running Archlinux!
+  when: ansible_distribution != "Archlinux"
+
+- name: Add multilib support (1/2)
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/pacman.conf
+    regexp: ^#\s*\[multilib\]
+    line: "[multilib]"
+
+- name: Add multilib support (2/2)
+  become: true
+  ansible.builtin.replace:
+    path: /etc/pacman.conf
+    after: \[multilib\]
+    regexp: ^#\s*Include = /etc/pacman.d/mirrorlist
+    replace: Include = /etc/pacman.d/mirrorlist
+
+- name: Update system, including AUR and cache
+  kewlfft.aur.aur:
+    upgrade: true
+    update_cache: true
+
+- name: Ensure en_US.UTF-8 locale exists
+  community.general.locale_gen:
+    name: en_US.UTF-8
+
+- name: Install Graphic drivers as dependencies
+  kewlfft.aur.aur:
+    name:
+      - mesa
+      - lib32-mesa
+      - libva-mesa-driver
+      - lib32-libva-mesa-driver
+      - vulkan-mesa-layers
+      - lib32-vulkan-mesa-layers
+    use: "{{ pacman.aur_helper }}"
+    extra_args:
+      - --asdeps
+
+- name: Install steam font dependencies
+  kewlfft.aur.aur:
+    name:
+      - ttf-liberation
+
+- name: Install Proton-GE
+  kewlfft.aur.aur:
+    name:
+      - proton-ge-custom-bin
+
+- name: Install MangoHud
+  kewlfft.aur.aur:
+    name:
+      - mangohud
+      - lib32-mangohud
+
+- name: Install Steam
+  kewlfft.aur.aur:
+    name:
+      - steam
+
+- name: Create steam configuration folder
+  ansible.builtin.file:
+    path: ~/.steam/steam/
+    state: directory
+    mode: "0755"
+
+- name: Copy steam configuration
+  ansible.builtin.template:
+    src: steam_dev.cfg.j2
+    dest: ~/.steam/steam/steam_dev.cfg
+    mode: "0644"

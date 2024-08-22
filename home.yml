@@ -31,3 +31,4 @@
     - role: sensors
     - role: automatic-shutdown
     - role: desktop
+    - role: steam
