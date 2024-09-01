@@ -1,0 +1,22 @@
+---
+- name: Create sytemd login.conf.d
+  become: true
+  ansible.builtin.file:
+    path: /etc/systemd/logind.conf.d
+    state: directory
+    mode: "0755"
+
+- name: Disable suspend when lid is closed
+  become: true
+  ansible.builtin.template:
+    src: HandleLidSwitch-ignore.conf.j2
+    dest: /etc/systemd/logind.conf.d/HandleLidSwitch-ignore.conf
+    mode: "0644"
+
+- name: Install tlp
+  become: true
+  ansible.builtin.apt:
+    name:
+      - tlp
+      - tlp-rdw
+    state: present

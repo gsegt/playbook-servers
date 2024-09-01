@@ -1,0 +1,43 @@
+---
+- name: Add Docker apt key
+  become: true
+  ansible.builtin.apt_key:
+    url: "https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg"
+    keyring: /etc/apt/keyrings/docker.gpg
+
+- name: Add Docker apt repository
+  become: true
+  ansible.builtin.apt_repository:
+    repo: |
+      deb [signed-by=/etc/apt/keyrings/docker.gpg]
+      "https://download.docker.com/linux/{{ ansible_distribution | lower }}" {{ ansible_distribution_release }} stable
+    filename: docker
+
+- name: Install Docker packages
+  become: true
+  ansible.builtin.apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+    update_cache: true
+
+- name: Enable docker service
+  become: true
+  ansible.builtin.systemd:
+    name: docker
+    enabled: true
+
+- name: Add user to docker group
+  become: true
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    append: true
+    groups: docker
+  notify: Restart docker service
+
+- name: Allow all handlers to run
+  ansible.builtin.meta: flush_handlers

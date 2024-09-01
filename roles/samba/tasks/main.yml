@@ -1,0 +1,48 @@
+---
+- name: Install Samba
+  become: true
+  ansible.builtin.apt:
+    name:
+      - samba
+    state: present
+
+- name: Add a user for private share
+  become: true
+  ansible.builtin.user:
+    name: "{{ samba.private.user }}"
+  notify:
+    - Reboot
+    - Add samba password to user
+
+- name: Enable smbd service
+  become: true
+  ansible.builtin.systemd:
+    name: smbd
+    enabled: true
+
+- name: Create samba folder for private share
+  become: true
+  ansible.builtin.file:
+    path: "{{ samba.private.share }}"
+    state: directory
+    mode: "0755"
+    owner: "{{ samba.private.user }}"
+    group: "{{ samba.private.user }}"
+
+- name: Adding the configuration for the private share
+  become: true
+  ansible.builtin.blockinfile:
+    marker: "# {mark} {{ samba.private.name }} share"
+    path: /etc/samba/smb.conf
+    insertafter: EOF
+    block: |
+      [{{ samba.private.name }}]
+      path = {{ samba.private.share }}
+      valid users = {{ samba.private.user }}
+      public = no
+      writeable = yes
+    backup: true
+  notify: Restart smbd service
+
+- name: Allow all handlers to run
+  ansible.builtin.meta: flush_handlers

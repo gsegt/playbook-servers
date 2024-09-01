@@ -1,0 +1,41 @@
+---
+- name: Get render group info
+  ansible.builtin.getent:
+    database: group
+    key: render
+
+- name: Set a variable for render gid
+  ansible.builtin.set_fact:
+    render_gid: "{{ ansible_facts.getent_group.render[1] }}"
+
+- name: Create media server infrastructure root folders
+  ansible.builtin.file:
+    path: "{{ media_server.infra }}"
+    state: directory
+    mode: "0755"
+
+- name: Create all docker related media server infrastructure folders
+  ansible.builtin.file:
+    path: "{{ media_server.infra }}/{{ item.path }}"
+    state: directory
+    mode: "0755"
+  with_community.general.filetree: "../templates"
+  when: item.state == 'directory'
+
+- name: Copy all docker related media server infrastructure files
+  ansible.builtin.template:
+    src: "{{ item.path }}"
+    dest: "{{ media_server.infra }}/{{ item.path | replace('.j2', '') }}"
+    mode: "0644"
+  with_community.general.filetree: "../templates"
+  when:
+    - item.state == 'file'
+    - "'recyclarr.yml.j2' not in item.path"
+
+- name: Start the media server services
+  community.docker.docker_compose_v2:
+    project_src: "{{ media_server.infra }}"
+    remove_orphans: true
+
+- name: Import update recyclarr config tasks
+  ansible.builtin.include_tasks: update-recyclarr-config.yml

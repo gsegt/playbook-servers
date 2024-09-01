@@ -1,8 +1,0 @@
-[user]
-	name = gsegt
-	email = git@gsegt.eu
-[pull]
-	rebase = true
-[core]
-	autocrlf = input
-	eol = lf

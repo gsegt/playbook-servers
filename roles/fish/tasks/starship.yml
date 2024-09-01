@@ -1,0 +1,14 @@
+---
+- name: Fetch starship installer script
+  ansible.builtin.uri:
+    url: https://starship.rs/install.sh
+    return_content: true
+  register: starship_installer
+
+- name: Install starship prompt
+  become: true
+  ansible.builtin.command:
+    cmd: sh -s -- -y
+    stdin: "{{ starship_installer.content }}"
+  register: starship_installed
+  changed_when: starship_installed.rc != 0

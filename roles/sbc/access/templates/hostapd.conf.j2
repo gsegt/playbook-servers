@@ -1,19 +1,19 @@
 # {{ ansible_managed }}
 
-driver={{ wireless.driver }}
-country_code={{ wireless.country_code }}
-interface={{ wireless.interface }}
-bridge={{ bridge_interface }}
-ssid={{ wireless.ssid }}
-hw_mode={{ wireless.hw_mode }}
-channel={{ wireless.channel }}
-macaddr_acl={{ wireless.macaddr_acl }}
-auth_algs={{ wireless.auth_algs }}
-ignore_broadcast_ssid={{ wireless.ignore_broadcast_ssid }}
-wpa={{ wireless.wpa.version }}
-wpa_passphrase={{ wireless.wpa.passphrase }}
-wpa_key_mgmt={{ wireless.wpa.key_mgmt }}
-wpa_pairwise={{ wireless.wpa.pairwise }}
-rsn_pairwise={{ wireless.wpa.rsn_pairwise }}
-wmm_enabled={{ wireless.wmm_enabled }}
-{{ wireless.ieee80211 | join('\n') }}
+driver={{ access.wireless.driver }}
+country_code={{ access.wireless.country_code }}
+interface={{ access.wireless.interface }}
+bridge={{ acress.bridge_interface }}
+ssid={{ access.wireless.ssid }}
+hw_mode={{ access.wireless.hw_mode }}
+channel={{ access.wireless.channel }}
+macaddr_acl={{ access.wireless.macaddr_acl }}
+auth_algs={{ access.wireless.auth_algs }}
+ignore_broadcast_ssid={{ access.wireless.ignore_broadcast_ssid }}
+wpa={{ access.wireless.wpa.version }}
+wpa_passphrase={{ access.wireless.wpa.passphrase }}
+wpa_key_mgmt={{ access.wireless.wpa.key_mgmt }}
+wpa_pairwise={{ access.wireless.wpa.pairwise }}
+rsn_pairwise={{ access.wireless.wpa.rsn_pairwise }}
+wmm_enabled={{ access.wireless.wmm_enabled }}
+{{ access.wireless.ieee80211 | join('\n') }}

@@ -1,0 +1,64 @@
+---
+- name: Install fish shell
+  become: true
+  ansible.builtin.apt:
+    name:
+      - fish
+    state: present
+
+- name: Create all fish related folders
+  ansible.builtin.file:
+    path: "{{ xdg_config_home }}/fish/{{ item.path }}"
+    state: directory
+    mode: "0755"
+  with_community.general.filetree: "../templates"
+  when: item.state == 'directory'
+
+- name: Copy fish user config files
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ xdg_config_home }}/fish/{{ item.path | replace('.j2', '') }}"
+    mode: "0644"
+  with_community.general.filetree: "../templates"
+  when: item.state == 'file'
+
+- name: Create root user fish configuration folder
+  become: true
+  ansible.builtin.file:
+    path: "{{ xdg_config_home }}" # This gets evaluated as the root user
+    state: directory
+    mode: "0755"
+
+- name: Evaluate user fish folder path  # noqa: no-changed-when Evaluating value to reuse it later
+  ansible.builtin.command: echo {{ xdg_config_home }}
+  register: user_xdg_config_home
+
+- name: Symbolic link fish config to root user
+  become: true
+  ansible.builtin.file:
+    src: "{{ user_xdg_config_home.stdout }}/fish"
+    dest: "{{ xdg_config_home }}/fish"
+    state: link
+    force: true
+
+- name: Change the root user shell to fish
+  become: true
+  ansible.builtin.user:
+    name: root
+    shell: /usr/bin/fish
+
+# This task is necessary as VSCode remote is spotty when the target user is using the fish shell as a login shell
+- name: Add fish as an interactive shell to user
+  ansible.builtin.blockinfile:
+    marker: "# {mark} Use fish interactive shell"
+    path: $HOME/.bashrc
+    insertafter: EOF
+    block: |
+      fish
+    backup: true
+
+- name: Import starship tasks
+  ansible.builtin.include_tasks: fisher.yml
+
+- name: Import starship tasks
+  ansible.builtin.include_tasks: starship.yml

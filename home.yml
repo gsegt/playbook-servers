@@ -1,34 +1,15 @@
 ---
-- name: Configure all hosts
-  hosts: home
+- name: Configure aspire
+  hosts: aspire
   roles:
     - role: system
     - role: fish
-
-- name: Configure all servers hosts
-  hosts: servers
-  roles:
     - { role: geerlingguy.security, become: true }
     - { role: chriswayg.msmtp-mailer, become: true }
-    - role: unatended-upgrades
-
-- name: Configure aspire host
-  hosts: aspire
-  roles:
+    - role: autoupdate
     - role: dropbear
     - role: docker
     - role: media-server
-    - role: watchtower
+    - role: diun
     - role: nfs
     - role: samba
-
-- name: Configure opendan host
-  hosts: opendan
-  roles:
-    - role: pacman
-    - role: dotfiles
-    - role: gpu-overclocking
-    - role: sensors
-    - role: automatic-shutdown
-    - role: desktop
-    - role: steam

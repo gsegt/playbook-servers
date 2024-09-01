@@ -1,0 +1,94 @@
+---
+- name: Add support for https repos
+  become: true
+  ansible.builtin.apt:
+    name: apt-transport-https
+
+- name: Copy sources.list file
+  become: true
+  ansible.builtin.template:
+    src: sources.list.j2
+    dest: /etc/apt/sources.list
+    mode: "0644"
+
+- name: Update Debian system fully
+  become: true
+  ansible.builtin.apt:
+    upgrade: full
+    update_cache: true
+    autoclean: true
+    autoremove: true
+  notify: Reboot if required
+
+- name: Check if reboot is needed
+  become: true
+  ansible.builtin.stat:
+    path: /var/run/reboot-required
+  register: system_reboot_required
+
+- name: Install firmware packages
+  become: true
+  ansible.builtin.apt:
+    name: "{{ firmware_packages }}"
+  when: firmware_packages is defined
+
+- name: Set hostname
+  become: true
+  ansible.builtin.hostname:
+    name: "{{ hostname }}"
+  when: inventory_hostname not in groups['vm']
+
+- name: Set timezone
+  become: true
+  community.general.timezone:
+    name: "{{ timezone }}"
+  when: inventory_hostname not in groups['vm']
+
+- name: Create all XDG folders
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  with_items:
+    - "{{ xdg_bin_home }}"
+    - "{{ xdg_cache_home }}"
+    - "{{ xdg_config_home }}"
+    - "{{ xdg_data_home }}"
+    - "{{ xdg_state_home }}"
+
+- name: Install core system packages
+  become: true
+  ansible.builtin.package:
+    name: "{{ home_system_packages }}"
+    state: present
+
+- name: Disable part of ssh login messages
+  become: true
+  ansible.builtin.template:
+    src: motd.j2
+    dest: /etc/motd
+    mode: "0644"
+
+- name: Disable cron e-mail notifications for user root
+  become: true
+  ansible.builtin.cron:
+    name: MAILTO
+    env: true
+    job: ""
+
+- name: Disable cron e-mail notifications for user {{ ansible_user }}
+  ansible.builtin.cron:
+    name: MAILTO
+    env: true
+    job: ""
+
+- name: Import Laptops tasks
+  ansible.builtin.include_tasks: laptops.yml
+  when: inventory_hostname in groups['laptops']
+
+- name: Import Single Board Computer tasks
+  ansible.builtin.include_tasks: sbc.yml
+  when: inventory_hostname in groups['sbc']
+
+- name: Allow all handlers to run
+  ansible.builtin.meta: flush_handlers

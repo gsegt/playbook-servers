@@ -1,4 +1,8 @@
 ---
+### Ansible
+
+ansible_python_interpreter: auto_silent
+
 ### XDG Folders
 
 xdg_config_home: $HOME/.config
@@ -45,5 +49,32 @@ debian_security_url: https://security.debian.org/debian-security
 
 fish_modules:
   - jorgebucaran/autopair.fish
-  - jorgebucaran/replay.fish
-  - jhillyerd/plugin-git
+
+### MSMTP (chriswayg.msmtp-mailer)
+
+msmtp_accounts:
+  - account: custom # Can't be named "default"
+    host: "{{ vault_email.smtp.host }}"
+    port: "{{ vault_email.smtp.startls }}"
+    auth: "on"
+    from: "{{ vault_email.from }}"
+    user: "{{ vault_email.user }}"
+    password: "{{ vault_email.password }}"
+
+msmtp_default_account: custom
+
+msmtp_alias_default: "{{ vault_email.from }}"
+
+### SSH security (geerlingguy.security)
+
+security_sudoers_passwordless:
+  - "{{ ansible_user }}"
+security_autoupdate_enabled: false # Handled by a dedicated role
+
+### Autoupdate
+
+autoupdate:
+  reboot: false
+  mail_to: "{{ vault_email.to }}"
+  reboot_time: 04:00
+  mail_report: always # Could be "always", "on-change" or "only-on-error"

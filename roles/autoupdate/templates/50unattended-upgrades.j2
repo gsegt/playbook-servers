@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+
+Unattended-Upgrade::Automatic-Reboot "{{ autoupdate.reboot }}";
+Unattended-Upgrade::Automatic-Reboot-Time "{{ autoupdate.reboot_time }}";
+Unattended-Upgrade::Mail "{{ autoupdate.mail_to }}";
+Unattended-Upgrade::MailReport "{{ autoupdate.mail_report }}";
+Unattended-Upgrade::MinimalSteps "true";
+Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
+Unattended-Upgrade::Remove-Unused-Dependencies "true";
+Unattended-Upgrade::Allowed-Origins {
+        "${distro_id}:${distro_codename}";
+        "${distro_id}:${distro_codename}-security";
+        "${distro_id}:${distro_codename}-updates";
+        "${distro_id}:${distro_codename}-backports";
+};

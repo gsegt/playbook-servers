@@ -1,7 +1,4 @@
 ---
-collections:
-    - name: kewlfft.aur
-
 roles:
     - name: geerlingguy.security
     - name: chriswayg.msmtp-mailer

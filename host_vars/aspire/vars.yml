@@ -35,7 +35,7 @@ dropbear:
 
 media_server:
   infra: /opt/docker/media-server/
-  data: /media/external/data/
+  data: /media/external/media-server-data/
   subnet: 172.31.255.0/24
 
 ### Network Sharing
@@ -46,6 +46,7 @@ nfs:
 
 samba:
   private:
+    name: media-server-data
     share: "{{ media_server.data }}"
     user: "{{ ansible_user }}"
     password: "{{ vault_samba_password }}"

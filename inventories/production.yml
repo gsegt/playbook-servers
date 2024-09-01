@@ -1,18 +1,9 @@
 ---
 home:
   children:
-    pc:
-      hosts:
-        opendan:
-    servers:
-      hosts:
-        aspire:
-
     laptops:
       hosts:
         aspire:
     desktops:
-      hosts:
-        opendan:
     vm:
     sbc:

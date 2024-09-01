@@ -1,4 +1,0 @@
----
-- name: Detect sensors # noqa: no-changed-when
-  become: true
-  ansible.builtin.command: sensors-detect --auto

@@ -21,11 +21,11 @@
 - name: Create netdev file
   become: true
   ansible.builtin.blockinfile:
-    path: /etc/systemd/network/bridge-{{ bridge_interface }}.netdev
+    path: /etc/systemd/network/bridge-{{ acess.bridge_interface }}.netdev
     insertafter: EOF
     block: |
       [NetDev]
-      Name={{ bridge_interface }}
+      Name={{ acess.bridge_interface }}
       Kind=bridge
     create: true
     mode: "0644"
@@ -33,13 +33,13 @@
 - name: Create network file
   become: true
   ansible.builtin.blockinfile:
-    path: /etc/systemd/network/{{ bridge_interface }}-member-{{ ethernet_interface }}.network
+    path: /etc/systemd/network/{{ acess.bridge_interface }}-member-{{ ethernet_interface }}.network
     insertafter: EOF
     block: |
       [Match]
-      Name={{ ethernet_interface }}
+      Name={{ acess.ethernet_interface }}
       [Network]
-      Bridge={{ bridge_interface }}
+      Bridge={{ acess.bridge_interface }}
     create: true
     mode: "0644"
 
@@ -56,8 +56,8 @@
     path: /etc/dhcpcd.conf
     insertafter: EOF
     block: |
-      denyinterfaces {{ wireless.interface }} {{ ethernet_interface }}
-      interface {{ bridge_interface }}
+      denyinterfaces {{ access.wireless.interface }} {{ access.ethernet_interface }}
+      interface {{ access.bridge_interface }}
     create: true
     mode: "0644"
 

@@ -1,8 +1,8 @@
-# Infra Playbooks
+# Playbook server
 
-This repository will hold playbooks for my pc and servers using ansible.
+This repository will hold playbooks for my server using ansible.
 
-- [Infra Playbooks](#infra-playbooks)
+- [Playbook server](#playbook-server)
   - [Requirements](#requirements)
     - [SSH setup](#ssh-setup)
     - [Set user as password less sudo](#set-user-as-password-less-sudo)
@@ -46,12 +46,6 @@ Install required python packages:
 
     ```sh
     sudo apt install python-is-python3 python3-venv
-    ```
-
-- On Arch Linux:
-
-    ```sh
-    sudo pacman -S python3
     ```
 
 Create a virtual environment:
