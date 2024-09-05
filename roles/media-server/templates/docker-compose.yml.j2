@@ -13,8 +13,8 @@ x-torrents: &torrents "{{ media_server.data }}/torrents:/data/torrents"
 name: &name media-server
 
 services:
-  bazarr-anime: &bazarr
-    container_name: bazarr-anime
+  bazarr:
+    container_name: bazarr
     image: lscr.io/linuxserver/bazarr:latest
     pull_policy: *pull_policy
     restart: *restart
@@ -26,25 +26,7 @@ services:
       - *tz
     volumes:
       - *media
-      - bazarr-anime-config:/config
-
-  bazarr-live-1080p:
-    <<: *bazarr
-    container_name: bazarr-live-1080p
-    ports:
-      - 6768:6767
-    volumes:
-      - *media
-      - bazarr-live-1080p-config:/config
-
-  bazarr-live-2160p:
-    <<: *bazarr
-    container_name: bazarr-live-2160p
-    ports:
-      - 6769:6767
-    volumes:
-      - *media
-      - bazarr-live-2160p-config:/config
+      - bazarr-config:/config
 
   flaresolverr:
     container_name: flaresolverr
@@ -120,8 +102,8 @@ services:
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
 
-  radarr-anime: &radarr
-    container_name: radarr-anime
+  radarr:
+    container_name: radarr
     image: lscr.io/linuxserver/radarr:latest
     pull_policy: *pull_policy
     restart: *restart
@@ -133,25 +115,7 @@ services:
       - *tz
     volumes:
       - *data
-      - radarr-anime-config:/config
-
-  radarr-live-1080p:
-    <<: *radarr
-    container_name: radarr-live-1080p
-    ports:
-      - 7879:7878
-    volumes:
-      - *data
-      - radarr-live-1080p-config:/config
-
-  radarr-live-2160p:
-    <<: *radarr
-    container_name: radarr-live-2160p
-    ports:
-      - 7880:7878
-    volumes:
-      - *data
-      - radarr-live-2160p-config:/config
+      - radarr-config:/config
 
   recyclarr:
     container_name: recyclarr
@@ -165,8 +129,8 @@ services:
       - RECYCLARR_CREATE_CONFIG=true
     user: "{{ ansible_user_uid }}:{{ ansible_user_gid }}"
 
-  sonarr-anime: &sonarr
-    container_name: sonarr-anime
+  sonarr:
+    container_name: sonarr
     image: lscr.io/linuxserver/sonarr:latest
     pull_policy: *pull_policy
     restart: *restart
@@ -178,53 +142,23 @@ services:
       - *tz
     volumes:
       - *data
-      - sonarr-anime-config:/config
-
-  sonarr-live-1080p:
-    <<: *sonarr
-    container_name: sonarr-live-1080p
-    ports:
-      - 8990:8989
-    volumes:
-      - *data
-      - sonarr-live-1080p-config:/config
-
-  sonarr-live-2160p:
-    <<: *sonarr
-    container_name: sonarr-live-2160p
-    ports:
-      - 8991:8989
-    volumes:
-      - *data
-      - sonarr-live-2160p-config:/config
+      - sonarr-config:/config
 
 volumes:
-  bazarr-anime-config:
-    name: bazarr-anime-config
-  bazarr-live-1080p-config:
-    name: bazarr-live-1080p-config
-  bazarr-live-2160p-config:
-    name: bazarr-live-2160p-config
+  bazarr-config:
+    name: bazarr-config
   jellyfin-config:
     name: jellyfin-config
   prowlarr-config:
     name: prowlarr-config
   qbittorrent-wireguard-config:
     name: qbittorrent-wireguard-config
-  radarr-anime-config:
-    name: radarr-anime-config
-  radarr-live-1080p-config:
-    name: radarr-live-1080p-config
-  radarr-live-2160p-config:
-    name: radarr-live-2160p-config
+  radarr-config:
+    name: radarr-config
   recyclarr-config:
     name: recyclarr-config
-  sonarr-anime-config:
-    name: sonarr-anime-config
-  sonarr-live-1080p-config:
-    name: sonarr-live-1080p-config
-  sonarr-live-2160p-config:
-    name: sonarr-live-2160p-config
+  sonarr-config:
+    name: sonarr-config
 
 networks:
   default:
