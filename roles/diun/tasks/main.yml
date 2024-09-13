@@ -42,3 +42,4 @@
       DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT: "true"
     volumes: "{{ diun_volumes }}"
     restart_policy: unless-stopped
+    pull: always
