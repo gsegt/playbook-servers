@@ -55,3 +55,8 @@ samba:
       share: /media/external/redundant-data/
       user: "{{ ansible_user }}"
       password: "{{ vault_samba_password }}"
+
+# DIUN
+
+diun:
+  schedule: 0 0 4 * * * # Every day at 04h00

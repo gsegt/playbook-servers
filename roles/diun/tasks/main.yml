@@ -29,7 +29,7 @@
     image: ghcr.io/crazy-max/diun
     env:
       TZ: "{{ timezone }}"
-      DIUN_WATCH_SCHEDULE: 0 0 4 * * *
+      DIUN_WATCH_SCHEDULE: "{{ diun.schedule }}"
       DIUN_NOTIF_MAIL_HOST: "{{ vault_email.smtp.host }}"
       DIUN_NOTIF_MAIL_PORT: "{{ vault_email.smtp.startls }}"
       DIUN_NOTIF_MAIL_SSL: "false" # Uses STARTTLS
