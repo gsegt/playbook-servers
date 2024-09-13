@@ -77,4 +77,4 @@ autoupdate:
   reboot: false
   mail_to: "{{ vault_email.to }}"
   reboot_time: 04:00
-  mail_report: always # Could be "always", "on-change" or "only-on-error"
+  mail_report: on-change # Could be "always", "on-change" or "only-on-error"
