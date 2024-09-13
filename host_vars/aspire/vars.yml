@@ -59,4 +59,4 @@ samba:
 # DIUN
 
 diun:
-  schedule: 0 0 4 * * * # Every day at 04h00
+  schedule: 0 0 4 * * 6 # Every saturday at 04h00
