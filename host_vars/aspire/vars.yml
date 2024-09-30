@@ -31,25 +31,48 @@ dropbear:
   authorized_keys:
     - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEf5Nt/JVAhptEaxDU/5Rdf284QswbVpKOOWFf7o5RAk ickule@opendan"
 
+### Network Sharing
+
+_drives:
+  media_server_data: /media/external/media-server-data
+  redundant_data: /media/external/redundant-data
+
+
+nfs:
+  shares:
+    - "{{ _drives.media_server_data }}"
+    - "{{ _drives.redundant_data }}"
+
+samba:
+  private:
+    - name: media-server-data
+      share: "{{ _drives.media_server_data }}"
+      user: "{{ ansible_user }}"
+      password: "{{ vault_samba_password }}"
+    - name: redundant-data
+      share: "{{ _drives.redundant_data }}"
+      user: "{{ ansible_user }}"
+      password: "{{ vault_samba_password }}"
+
 ### Media Server
 
 media_server:
   infra: /opt/docker/media-server/
-  data: /media/external/media-server-data/
+  data: "{{ _drives.media_server_data }}"
   subnet: 172.31.255.0/24
 
 ### Nextcloud
 
 nextcloud:
   infra: /opt/docker/nextcloud/
-  data: /media/external/redundant-data/volumes/nextcloud/data/
+  data: "{{ _drives.redundant_data }}/volumes/nextcloud/data/"
   subnet: 172.31.254.0/24
 
 ### Joplin
 
 joplin:
   infra: /opt/docker/joplin/
-  data: /media/external/redundant-data/volumes/joplin/data/
+  data: "{{ _drives.redundant_data }}/volumes/joplin/data/"
   subnet: 172.31.252.0/24
 
 ### Caddy
@@ -57,24 +80,6 @@ joplin:
 caddy:
   infra: /opt/docker/caddy/
   subnet: 172.31.251.0/24
-
-### Network Sharing
-
-nfs:
-  shares:
-    - "{{ media_server.data }}"
-    - /media/external/redundant-data/
-
-samba:
-  private:
-    - name: media-server-data
-      share: "{{ media_server.data }}"
-      user: "{{ ansible_user }}"
-      password: "{{ vault_samba_password }}"
-    - name: redundant-data
-      share: /media/external/redundant-data/
-      user: "{{ ansible_user }}"
-      password: "{{ vault_samba_password }}"
 
 # DIUN
 

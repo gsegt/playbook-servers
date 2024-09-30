@@ -8,11 +8,11 @@
     - { role: chriswayg.msmtp-mailer, become: true }
     - role: autoupdate
     - role: dropbear
+    - role: nfs
+    - role: samba
     - role: docker
     - role: media-server
     - role: diun
-    - role: nfs
-    - role: samba
     - role: joplin
     - role: nextcloud
     - role: caddy
