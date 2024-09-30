@@ -54,34 +54,39 @@ samba:
       user: "{{ ansible_user }}"
       password: "{{ vault_samba_password }}"
 
-### Media Server
+### Docker
 
-media_server:
-  infra: /opt/docker/media-server/
-  data: "{{ _drives.media_server_data }}"
-  subnet: 172.31.255.0/24
+_docker:
+  base_infra: /opt/docker
 
-### Nextcloud
-
-nextcloud:
-  infra: /opt/docker/nextcloud/
-  data: "{{ _drives.redundant_data }}/volumes/nextcloud/data/"
-  subnet: 172.31.254.0/24
-
-### Joplin
-
-joplin:
-  infra: /opt/docker/joplin/
-  data: "{{ _drives.redundant_data }}/volumes/joplin/data/"
-  subnet: 172.31.252.0/24
-
-### Caddy
-
-caddy:
-  infra: /opt/docker/caddy/
-  subnet: 172.31.251.0/24
-
-# DIUN
+###### DIUN
 
 diun:
   schedule: 0 0 4 * * 6 # Every saturday at 04h00
+
+###### Media Server
+
+media_server:
+  infra: "{{ _docker.base_infra }}/media-server/"
+  data: "{{ _drives.media_server_data }}"
+  subnet: 172.31.255.0/24
+
+###### Nextcloud
+
+nextcloud:
+  infra: "{{ _docker.base_infra }}/nextcloud/"
+  data: "{{ _drives.redundant_data }}/volumes/nextcloud/data/"
+  subnet: 172.31.254.0/24
+
+###### Joplin
+
+joplin:
+  infra: "{{ _docker.base_infra }}/joplin/"
+  data: "{{ _drives.redundant_data }}/volumes/joplin/data/"
+  subnet: 172.31.252.0/24
+
+###### Caddy
+
+caddy:
+  infra: "{{ _docker.base_infra }}/caddy/"
+  subnet: 172.31.251.0/24
