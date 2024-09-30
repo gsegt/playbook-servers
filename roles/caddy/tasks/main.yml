@@ -1,0 +1,53 @@
+---
+- name: Create caddy infrastructure root folders
+  become: true
+  ansible.builtin.file:
+    path: "{{ caddy.infra }}"
+    state: directory
+    mode: "0755"
+    owner: "{{ ansible_user_uid }}"
+    group: "{{ ansible_user_gid }}"
+
+- name: Create all docker related caddy infrastructure folders
+  ansible.builtin.file:
+    path: "{{ caddy.infra }}/{{ item.path }}"
+    state: directory
+    mode: "0755"
+  with_community.general.filetree: "../templates"
+  when: item.state == 'directory'
+
+- name: Copy all docker related caddy infrastructure files
+  ansible.builtin.template:
+    src: "{{ item.path }}"
+    dest: "{{ caddy.infra }}/{{ item.path | replace('.j2', '') }}"
+    mode: "0644"
+  with_community.general.filetree: "../templates"
+  when:
+    - item.state == 'file'
+
+- name: Create data volune for caddy
+  community.docker.docker_volume:
+    name: caddy-data
+
+- name: Create a network with custom IPAM config
+  community.docker.docker_network:
+    name: caddy
+    ipam_config:
+      - subnet: "{{ caddy.subnet }}"
+
+- name: Create caddy container
+  community.docker.docker_container:
+    name: caddy
+    image: caddy:alpine
+    pull: always
+    restart_policy: unless-stopped
+    volumes:
+      - caddy-data:/data"
+      - "{{ caddy.infra }}/Caddyfile:/etc/caddy/Caddyfile"
+    published_ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - name: caddy
+
+    restart: true

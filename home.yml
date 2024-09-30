@@ -13,3 +13,4 @@
     - role: diun
     - role: nfs
     - role: samba
+    - role: caddy

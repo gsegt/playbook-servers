@@ -38,6 +38,12 @@ media_server:
   data: /media/external/media-server-data/
   subnet: 172.31.255.0/24
 
+### Caddy
+
+caddy:
+  infra: /opt/docker/caddy/
+  subnet: 172.31.251.0/24
+
 ### Network Sharing
 
 nfs:
