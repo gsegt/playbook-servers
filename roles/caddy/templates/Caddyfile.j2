@@ -9,6 +9,10 @@ nextcloud.{{ vault_reverse_proxy.base_domain }} {
     reverse_proxy nextcloud:80
 }
 
+joplin.{{ vault_reverse_proxy.base_domain }} {
+    reverse_proxy joplin:22300
+}
+
 jellyfin.{{ vault_reverse_proxy.base_domain }} {
     reverse_proxy jellyfin:8096
 }

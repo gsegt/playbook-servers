@@ -13,5 +13,6 @@
     - role: diun
     - role: nfs
     - role: samba
+    - role: joplin
     - role: nextcloud
     - role: caddy
