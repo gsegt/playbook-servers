@@ -57,6 +57,9 @@ services:
       - /dev/dri/renderD128:/dev/dri/renderD128
     group_add:
       - "{{ render_gid }}"
+    networks:
+      - default
+      - caddy
 
   prowlarr:
     container_name: prowlarr
@@ -166,3 +169,6 @@ networks:
     ipam:
       config:
         - subnet: "{{ media_server.subnet }}"
+  caddy:
+    name: caddy
+    external: true
