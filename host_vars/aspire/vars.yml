@@ -38,6 +38,13 @@ media_server:
   data: /media/external/media-server-data/
   subnet: 172.31.255.0/24
 
+### Nextcloud
+
+nextcloud:
+  infra: /opt/docker/nextcloud/
+  data: /media/external/redundant-data/volumes/nextcloud/data/
+  subnet: 172.31.254.0/24
+
 ### Caddy
 
 caddy:
