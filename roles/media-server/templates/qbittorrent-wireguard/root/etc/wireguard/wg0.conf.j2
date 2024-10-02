@@ -1,14 +1,14 @@
 # {{ ansible_managed }}
 
 [Interface]
-# Device: {{ wireguard.device_name }}
-PrivateKey = {{ wireguard.private_key }}
-Address = {{ wireguard.address }}
-DNS = {{ wireguard.dns }}
-PostUp = ip route add {{ local_network }} via $(ip route | grep default | awk '{print $3}'); iptables -I OUTPUT -d {{ local_network }} -j ACCEPT; iptables -I OUTPUT -d {{ media_server.subnet }} -j ACCEPT; iptables -A OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT
-PreDown = iptables -D OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT; iptables -D OUTPUT -d {{ media_server.subnet }} -j ACCEPT; iptables -D OUTPUT -d {{ local_network }} -j ACCEPT; ip route del {{ local_network }} via $(ip route | grep default | awk '{print $3}')
+# Device: {{ vault_wireguard.device_name }}
+PrivateKey = {{ vault_wireguard.private_key }}
+Address = {{ vault_wireguard.address }}
+DNS = {{ vault_wireguard.dns }}
+PostUp = ip route add {{ local_network }} via $(ip route | grep default | awk '{print $3}') && iptables -I OUTPUT -d {{ local_network }} -j ACCEPT && iptables -I OUTPUT -d {{ media_server.subnet }} -j ACCEPT && iptables -I OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT
+PreDown = ip route del {{ local_network }} via $(ip route | grep default | awk '{print $3}') && iptables -D OUTPUT -d {{ local_network }} -j ACCEPT && iptables -D OUTPUT -d {{ media_server.subnet }} -j ACCEPT && iptables -D OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT
 
-{% for peer in wireguard.peers %}
+{% for peer in vault_wireguard.peers %}
 [Peer]
 PublicKey = {{ peer.public_key }}
 AllowedIPs = {{ peer.allowed_ip }}
