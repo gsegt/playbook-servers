@@ -62,8 +62,11 @@ msmtp_accounts:
     password: "{{ vault_email.password }}"
 
 msmtp_default_account: custom
+msmtp_domain: "{{ vault_base_domain }}"
 
 msmtp_alias_default: "{{ vault_email.from }}"
+
+msmtp_remove_mtas: true
 
 ### SSH security (geerlingguy.security)
 
