@@ -14,7 +14,7 @@ services:
     restart: *restart
     environment:
       - APP_PORT=22300
-      - APP_BASE_URL={{ ansible_host }}
+      - APP_BASE_URL=https://joplin.{{ vault_base_domain }}
       - DB_CLIENT=pg
       - POSTGRES_PASSWORD={{ vault_nextcloud.db_password }}
       - POSTGRES_DATABASE=joplin
