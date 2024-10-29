@@ -1,0 +1,49 @@
+---
+# {{ ansible_managed }}
+
+# yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/master/schemas/config-schema.json
+
+radarr:
+  radarr:
+    base_url: http://radarr:7878
+    api_key: "{{ radarr_api.key_text }}"
+
+    delete_old_custom_formats: true
+    replace_existing_custom_formats: true
+
+    media_naming:
+      folder: jellyfin-tmdb
+      movie:
+        rename: true
+        standard: jellyfin-tmdb
+
+    include:
+      - template: radarr-quality-definition-movie
+
+      - template: radarr-quality-profile-anime
+      - template: radarr-custom-formats-anime
+      - config: radarr/anime.yml
+
+      - template: radarr-quality-profile-hd-bluray-web
+      - template: radarr-custom-formats-hd-bluray-web
+      - config: radarr/hd-bluray-web.yml
+
+      - config: radarr/french-hd-bluray-web-multi.yml
+
+      - template: radarr-quality-profile-remux-web-1080p
+      - template: radarr-custom-formats-remux-web-1080p
+      - config: radarr/remux-web-1080p.yml
+
+      - config: radarr/french-remux-web-1080p-multi.yml
+
+      - template: radarr-quality-profile-uhd-bluray-web
+      - template: radarr-custom-formats-uhd-bluray-web
+      - config: radarr/uhd-bluray-web.yml
+
+      - config: radarr/french-uhd-bluray-web-multi.yml
+
+      - template: radarr-quality-profile-remux-web-2160p
+      - template: radarr-custom-formats-remux-web-2160p
+      - config: radarr/remux-web-2160p.yml
+
+      - config: radarr/french-remux-web-2160p-multi.yml

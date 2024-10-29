@@ -12,16 +12,32 @@
     xml_key_xpath: ApiKey
   register: sonarr_api
 
-- name: Copy recyclarr config
+- name: Create recyclarr related folders
+  become: true
+  ansible.builtin.file:
+    path: /var/lib/docker/volumes/recyclarr-config/_data/{{ item.path | regex_replace('^recyclarr/', '') }}
+    state: directory
+    mode: "0755"
+    owner: "{{ ansible_user_uid }}"
+    group: "{{ ansible_user_gid }}"
+  with_community.general.filetree: "../templates"
+  when:
+    - item.state == 'directory'
+    - item.path != 'recyclarr'
+    - "'recyclarr' in item.path"
+
+- name: Copy recyclarr configs
   become: true
   ansible.builtin.template:
-    src: "{{ item }}.j2"
-    dest: /var/lib/docker/volumes/recyclarr-config/_data/{{ item }}
+    src: "{{ item.path }}"
+    dest: /var/lib/docker/volumes/recyclarr-config/_data/{{ item.path | regex_replace('^recyclarr/', '') | replace('.j2', '') }}
     mode: "0644"
     owner: "{{ ansible_user_uid }}"
     group: "{{ ansible_user_gid }}"
-  with_items:
-    - recyclarr.yml
+  with_community.general.filetree: "../templates"
+  when:
+    - item.state == 'file'
+    - "'recyclarr' in item.path"
   notify: Sync recyclarr
 
 - name: Allow all handlers to run
