@@ -125,11 +125,11 @@ services:
     image: ghcr.io/recyclarr/recyclarr:latest
     pull_policy: *pull_policy
     restart: *restart
-    volumes:
-      - recyclarr-config:/config
     environment:
       - *tz
       - RECYCLARR_CREATE_CONFIG=true
+    volumes:
+      - recyclarr-config:/config
     user: "{{ ansible_user_uid }}:{{ ansible_user_gid }}"
 
   sonarr:
