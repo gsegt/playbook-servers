@@ -61,6 +61,21 @@ services:
       - default
       - caddy
 
+  jellyseerr:
+    container_name: jellyseerr
+    image: fallenbagel/jellyseerr:latest
+    pull_policy: *pull_policy
+    restart: *restart
+    ports:
+      - 5055:5055
+    environment:
+      - *tz
+    volumes:
+      - jellyseerr-config:/app/config
+    networks:
+      - default
+      - caddy
+
   prowlarr:
     container_name: prowlarr
     image: lscr.io/linuxserver/prowlarr:latest
@@ -152,6 +167,8 @@ volumes:
     name: bazarr-config
   jellyfin-config:
     name: jellyfin-config
+  jellyseerr-config:
+    name: jellyseerr-config
   prowlarr-config:
     name: prowlarr-config
   qbittorrent-wireguard-config:
