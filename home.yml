@@ -11,7 +11,7 @@
     - role: nfs
     - role: samba
     - role: docker
-    - role: media-server
+    - role: media_server
     - role: diun
     - role: joplin
     - role: nextcloud
