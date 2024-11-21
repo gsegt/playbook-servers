@@ -25,7 +25,7 @@
   when:
     - item.state == 'file'
 
-- name: Create data volune for caddy
+- name: Create data volume for caddy
   community.docker.docker_volume:
     name: caddy-data
 
