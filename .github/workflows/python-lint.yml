@@ -1,0 +1,13 @@
+name: ruff-check
+run-name: Check Python code linting with ruff
+on: [push]
+jobs:
+  ruff-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+      - run: pip install -U -r requirements.txt
+      - run: ruff check .

@@ -1,0 +1,13 @@
+name: ansible-lint
+run-name: Check Ansible files linting repo with ansible-lint
+on: [push]
+jobs:
+  ansible-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+      - run: pip install -U -r requirements.txt
+      - run: ansible-lint

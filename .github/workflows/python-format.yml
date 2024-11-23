@@ -1,0 +1,13 @@
+name: ruff-format
+run-name: Check Python code format with ruff
+on: [push]
+jobs:
+  ruff-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+      - run: pip install -U -r requirements.txt
+      - run: ruff format . --check
