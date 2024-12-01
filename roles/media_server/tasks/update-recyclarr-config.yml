@@ -1,3 +1,4 @@
+---
 - name: Extract the Radarr ApiKey
   become: true
   extract_xml_key_text:
