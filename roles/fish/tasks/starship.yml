@@ -1,4 +1,10 @@
 ---
+- name: Install curl package
+  become: true
+  ansible.builtin.package:
+    name: curl
+    state: present
+
 - name: Fetch starship installer script
   ansible.builtin.uri:
     url: https://starship.rs/install.sh
