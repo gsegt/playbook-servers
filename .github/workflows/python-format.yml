@@ -10,4 +10,4 @@ jobs:
         with:
           python-version: "3.x"
       - run: pip install -U -r requirements.txt
-      - run: ruff format . --check
+      - run: ruff format --check
