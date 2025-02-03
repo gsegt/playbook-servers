@@ -51,7 +51,4 @@
     - root
 
 - name: Import starship tasks
-  ansible.builtin.include_tasks: fisher.yml
-
-- name: Import starship tasks
   ansible.builtin.include_tasks: starship.yml
