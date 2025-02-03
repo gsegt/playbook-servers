@@ -41,21 +41,14 @@
     state: link
     force: true
 
-- name: Change the root user shell to fish
+- name: Change the current and root user shell to fish
   become: true
   ansible.builtin.user:
-    name: root
+    name: "{{ item }}"
     shell: /usr/bin/fish
-
-# This task is necessary as VSCode remote is spotty when the target user is using the fish shell as a login shell
-- name: Add fish as an interactive shell to user
-  ansible.builtin.blockinfile:
-    marker: "# {mark} Use fish interactive shell"
-    path: $HOME/.bashrc
-    insertafter: EOF
-    block: |
-      fish
-    backup: true
+  loop:
+    - "{{ ansible_user_id }}"
+    - root
 
 - name: Import starship tasks
   ansible.builtin.include_tasks: fisher.yml
