@@ -3,7 +3,7 @@
 # Disable greeting
 set -g fish_greeting
 
-# Environemnt variables
+# Environment variables
 {% for var in home_env_vars %}
 set -gx {{ var }}
 {% endfor %}
@@ -16,5 +16,5 @@ set -gx {{ var }}
 # Update path
 fish_add_path {{ path | join(" ") }}
 
-# Load bash like functionnalities
+# Load bash like functionalities
 fish_user_key_bindings
