@@ -13,6 +13,5 @@
     - role: docker
     - role: media_server
     - role: diun
-    - role: joplin
     - role: nextcloud
     - role: caddy
