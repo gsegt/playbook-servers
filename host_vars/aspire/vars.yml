@@ -35,22 +35,16 @@ dropbear:
 
 _drives:
   media_server_data: /media/external/media-server-data
-  redundant_data: /media/external/redundant-data
 
 
 nfs:
   shares:
     - "{{ _drives.media_server_data }}"
-    - "{{ _drives.redundant_data }}"
 
 samba:
   private:
     - name: media-server-data
       share: "{{ _drives.media_server_data }}"
-      user: "{{ ansible_user }}"
-      password: "{{ vault_samba_password }}"
-    - name: redundant-data
-      share: "{{ _drives.redundant_data }}"
       user: "{{ ansible_user }}"
       password: "{{ vault_samba_password }}"
 
