@@ -2,13 +2,6 @@
     email {{ vault_reverse_proxy_email }}
 }
 
-nextcloud.{{ vault_base_domain }} {
-    redir /.well-known/carddav /remote.php/dav/ 301
-    redir /.well-known/caldav /remote.php/dav/ 301
-
-    reverse_proxy nextcloud:80
-}
-
 jellyfin.{{ vault_base_domain }} {
     reverse_proxy jellyfin:8096
 }
