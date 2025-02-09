@@ -14,7 +14,7 @@ set -gx {{ var }}
 {% endif %}
 
 # Update path
-fish_add_path {{ path | join(" ") }}
+fish_add_path {{ home_path | join(" ") }}
 
 # Load bash like functionalities
 fish_user_key_bindings

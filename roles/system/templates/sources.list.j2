@@ -1,6 +1,6 @@
 # {{ ansible_managed }}
 
-deb {{ debian_package_url }} {{ ansible_distribution_release }} main contrib non-free non-free-firmware
-deb {{ debian_security_url }} {{ ansible_distribution_release }}-security main contrib non-free non-free-firmware
-deb {{ debian_package_url }} {{ ansible_distribution_release }}-updates main contrib non-free non-free-firmware
-deb {{ debian_package_url }} {{ ansible_distribution_release }}-backports main contrib non-free non-free-firmware
+deb {{ home_debian_package_url }} {{ ansible_distribution_release }} main contrib non-free non-free-firmware
+deb {{ home_debian_security_url }} {{ ansible_distribution_release }}-security main contrib non-free non-free-firmware
+deb {{ home_debian_package_url }} {{ ansible_distribution_release }}-updates main contrib non-free non-free-firmware
+deb {{ home_debian_package_url }} {{ ansible_distribution_release }}-backports main contrib non-free non-free-firmware

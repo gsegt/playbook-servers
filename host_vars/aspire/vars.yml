@@ -33,7 +33,7 @@ _drives:
 
 ###### NFS
 
-nfs_network: "{{ local_network }}"
+nfs_network: "{{ home_local_network }}"
 nfs_shares:
   - "{{ _drives.media_server_data }}"
 

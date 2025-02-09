@@ -28,7 +28,7 @@
     name: diun
     image: ghcr.io/crazy-max/diun
     env:
-      TZ: "{{ timezone }}"
+      TZ: "{{ home_timezone }}"
       DIUN_WATCH_SCHEDULE: "{{ diun_schedule }}"
       DIUN_NOTIF_MAIL_HOST: "{{ vault_email.smtp.host }}"
       DIUN_NOTIF_MAIL_PORT: "{{ vault_email.smtp.startls }}"
