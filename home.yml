@@ -8,6 +8,7 @@
     - { role: chriswayg.msmtp-mailer, become: true }
     - role: autoupdate
     - role: dropbear
+    - role: zfs
     - role: nfs
     - role: samba
     - role: docker

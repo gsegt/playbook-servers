@@ -1,0 +1,25 @@
+---
+- name: Install linux headers
+  become: true
+  ansible.builtin.apt:
+    name:
+      - "linux-headers-{{ ansible_kernel }}"
+    state: present
+
+- name: Install ZFS
+  become: true
+  ansible.builtin.apt:
+    name:
+      - zfsutils-linux
+    default_release: "{{ ansible_distribution_release }}-backports"
+    state: present
+
+- name: Enable and start ZFS mount services
+  become: true
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+    masked: false
+  with_items:
+    - zfs.target
