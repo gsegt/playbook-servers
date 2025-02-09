@@ -1,5 +1,5 @@
 ---
-- name: Create data volune for Docker Image Update Notifier (DIUN)
+- name: Create data volume for Docker Image Update Notifier (DIUN)
   community.docker.docker_volume:
     name: diun-data
 
@@ -32,7 +32,7 @@
       DIUN_WATCH_SCHEDULE: "{{ diun_schedule }}"
       DIUN_NOTIF_MAIL_HOST: "{{ vault_email.smtp.host }}"
       DIUN_NOTIF_MAIL_PORT: "{{ vault_email.smtp.startls }}"
-      DIUN_NOTIF_MAIL_SSL: "false" # Uses STARTTLS
+      DIUN_NOTIF_MAIL_SSL: "false" # Uses STARTLS
       DIUN_NOTIF_MAIL_USERNAME: "{{ vault_email.user }}"
       DIUN_NOTIF_MAIL_PASSWORD: "{{ vault_email.password }}"
       DIUN_NOTIF_MAIL_FROM: "{{ vault_email.from }}"

@@ -1,5 +1,5 @@
 ---
-- name: Create sytemd login.conf.d
+- name: Create systemd login.conf.d
   become: true
   ansible.builtin.file:
     path: /etc/systemd/logind.conf.d
