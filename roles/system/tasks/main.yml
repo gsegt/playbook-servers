@@ -35,7 +35,7 @@
 - name: Set hostname
   become: true
   ansible.builtin.hostname:
-    name: "{{ hostname }}"
+    name: "{{ host_name }}"
   when: inventory_hostname not in groups['vm']
 
 - name: Set timezone

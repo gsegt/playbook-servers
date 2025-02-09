@@ -23,7 +23,7 @@
     path: /etc/initramfs-tools/initramfs.conf
     insertafter:
     block: |
-      IP={{ dropbear_ip }}::{{ dropbear_gateway }}:{{ dropbear_netmask }}:{{ hostname }}
+      IP={{ dropbear_ip }}::{{ dropbear_gateway }}:{{ dropbear_netmask }}:{{ host_name }}
     backup: true
   notify: Rebuild initramfs
 
