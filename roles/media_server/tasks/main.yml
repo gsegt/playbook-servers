@@ -10,13 +10,13 @@
 
 - name: Create media server infrastructure root folders
   ansible.builtin.file:
-    path: "{{ media_server.infra }}"
+    path: "{{ media_server_infra }}"
     state: directory
     mode: "0755"
 
 - name: Create all docker related media server infrastructure folders
   ansible.builtin.file:
-    path: "{{ media_server.infra }}/{{ item.path }}"
+    path: "{{ media_server_infra }}/{{ item.path }}"
     state: directory
     mode: "0755"
   with_community.general.filetree: "../templates"
@@ -27,7 +27,7 @@
 - name: Copy all docker related media server infrastructure files
   ansible.builtin.template:
     src: "{{ item.path }}"
-    dest: "{{ media_server.infra }}/{{ item.path | replace('.j2', '') }}"
+    dest: "{{ media_server_infra }}/{{ item.path | replace('.j2', '') }}"
     mode: "0644"
   with_community.general.filetree: "../templates"
   when:
@@ -36,7 +36,7 @@
 
 - name: Start the media server services
   community.docker.docker_compose_v2:
-    project_src: "{{ media_server.infra }}"
+    project_src: "{{ media_server_infra }}"
     remove_orphans: true
 
 - name: Import update recyclarr config tasks

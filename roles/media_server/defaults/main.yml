@@ -1,0 +1,4 @@
+---
+media_server_infra: /path/to/infra/folder
+media_server_data: /path/to/data/volume
+media_server_subnet: 0.0.0.0/0

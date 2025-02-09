@@ -6,9 +6,9 @@ x-pull_policy: &pull_policy always
 x-puid: &puid PUID={{ ansible_user_uid }}
 x-pgid: &pgid PGID={{ ansible_user_gid }}
 x-tz: &tz TZ={{ timezone }}
-x-data: &data "{{ media_server.data }}:/data"
-x-media: &media "{{ media_server.data }}/media:/data/media"
-x-torrents: &torrents "{{ media_server.data }}/torrents:/data/torrents"
+x-data: &data "{{ media_server_data }}:/data"
+x-media: &media "{{ media_server_data }}/media:/data/media"
+x-torrents: &torrents "{{ media_server_data }}/torrents:/data/torrents"
 
 name: &name media-server
 
@@ -185,7 +185,7 @@ networks:
     name: *name
     ipam:
       config:
-        - subnet: "{{ media_server.subnet }}"
+        - subnet: "{{ media_server_subnet }}"
   caddy:
     name: caddy
     external: true

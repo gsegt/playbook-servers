@@ -5,8 +5,8 @@
 PrivateKey = {{ vault_wireguard.private_key }}
 Address = {{ vault_wireguard.address }}
 DNS = {{ vault_wireguard.dns }}
-PostUp = ip route add {{ local_network }} via $(ip route | grep default | awk '{print $3}') && iptables -I OUTPUT -d {{ local_network }} -j ACCEPT && iptables -I OUTPUT -d {{ media_server.subnet }} -j ACCEPT && iptables -I OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT
-PreDown = ip route del {{ local_network }} via $(ip route | grep default | awk '{print $3}') && iptables -D OUTPUT -d {{ local_network }} -j ACCEPT && iptables -D OUTPUT -d {{ media_server.subnet }} -j ACCEPT && iptables -D OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT
+PostUp = ip route add {{ local_network }} via $(ip route | grep default | awk '{print $3}') && iptables -I OUTPUT -d {{ local_network }} -j ACCEPT && iptables -I OUTPUT -d {{ media_server_subnet }} -j ACCEPT && iptables -I OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT
+PreDown = ip route del {{ local_network }} via $(ip route | grep default | awk '{print $3}') && iptables -D OUTPUT -d {{ local_network }} -j ACCEPT && iptables -D OUTPUT -d {{ media_server_subnet }} -j ACCEPT && iptables -D OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT
 
 {% for peer in vault_wireguard.peers %}
 [Peer]

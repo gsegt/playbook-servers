@@ -59,10 +59,9 @@ diun_schedule: 0 0 4 * * 6 # Every saturday at 04h00
 
 ###### Media Server
 
-media_server:
-  infra: "{{ _docker.base_infra }}/media-server/"
-  data: "{{ _drives.media_server_data }}"
-  subnet: 172.31.255.0/24
+media_server_infra: "{{ _docker.base_infra }}/media-server/"
+media_server_data: "{{ _drives.media_server_data }}"
+media_server_subnet: 172.31.255.0/24
 
 ###### Caddy
 
