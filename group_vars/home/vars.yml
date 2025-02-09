@@ -71,8 +71,7 @@ security_autoupdate_enabled: false # Handled by a dedicated role
 
 ### Autoupdate
 
-autoupdate:
-  reboot: false
-  mail_to: "{{ vault_email.to }}"
-  reboot_time: 04:00
-  mail_report: on-change # Could be "always", "on-change" or "only-on-error"
+autoupdate_reboot: false
+autoupdate_mail_to: "{{ vault_email.to }}"
+autoupdate_reboot_time: 04:00
+autoupdate_mail_report: on-change

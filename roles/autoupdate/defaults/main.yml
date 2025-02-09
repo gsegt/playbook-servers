@@ -1,0 +1,5 @@
+---
+autoupdate_reboot: true
+autoupdate_mail_to: default@email.com
+autoupdate_reboot_time: 00:00
+autoupdate_mail_report: always # Could be "always", "on-change" or "only-on-error"

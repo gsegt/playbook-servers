@@ -1,9 +1,9 @@
 # {{ ansible_managed }}
 
-Unattended-Upgrade::Automatic-Reboot "{{ autoupdate.reboot }}";
-Unattended-Upgrade::Automatic-Reboot-Time "{{ autoupdate.reboot_time }}";
-Unattended-Upgrade::Mail "{{ autoupdate.mail_to }}";
-Unattended-Upgrade::MailReport "{{ autoupdate.mail_report }}";
+Unattended-Upgrade::Automatic-Reboot "{{ autoupdate_reboot }}";
+Unattended-Upgrade::Automatic-Reboot-Time "{{ autoupdate_reboot_time }}";
+Unattended-Upgrade::Mail "{{ autoupdate_mail_to }}";
+Unattended-Upgrade::MailReport "{{ autoupdate_mail_report }}";
 Unattended-Upgrade::MinimalSteps "true";
 Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
 Unattended-Upgrade::Remove-Unused-Dependencies "true";
