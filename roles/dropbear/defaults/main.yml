@@ -1,0 +1,9 @@
+---
+dropbear_gateway: 0.0.0.0
+dropbear_netmask: 0.0.0.0
+dropbear_ip: 0.0.0.0
+dropbear_port: 22
+dropbear_timeout: 300
+dropbear_authorized_keys:
+  - "key1"
+  - "key2"

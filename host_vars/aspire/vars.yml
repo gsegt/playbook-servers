@@ -22,14 +22,11 @@ hostname: aspire
 
 ### Dropbear
 
-dropbear:
-  gateway: 192.168.1.254
-  netmask: 255.255.255.0
-  ip: 192.168.1.252
-  port: 22
-  timeout: 300
-  authorized_keys:
-    - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEf5Nt/JVAhptEaxDU/5Rdf284QswbVpKOOWFf7o5RAk"
+dropbear_gateway: 192.168.1.254
+dropbear_netmask: 255.255.255.0
+dropbear_ip: 192.168.1.252
+dropbear_authorized_keys:
+  - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEf5Nt/JVAhptEaxDU/5Rdf284QswbVpKOOWFf7o5RAk"
 
 ### Network Sharing
 
