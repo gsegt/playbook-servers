@@ -10,7 +10,7 @@
   become: true
   ansible.builtin.user:
     name: "{{ item.user }}"
-  loop: "{{ samba.private }}"
+  loop: "{{ samba_private_shares }}"
   notify:
     - Reboot
     - Add samba password to user
@@ -29,9 +29,9 @@
     mode: "0755"
     owner: "{{ item.user }}"
     group: "{{ item.user }}"
-  loop: "{{ samba.private }}"
+  loop: "{{ samba_private_shares }}"
 
-- name: Adding the configuration for the private share
+- name: Adding the configuration for private shares
   become: true
   ansible.builtin.blockinfile:
     marker: "# {mark} {{ item.name }} share"
@@ -45,7 +45,7 @@
       writeable = yes
     backup: true
     prepend_newline: true
-  loop: "{{ samba.private }}"
+  loop: "{{ samba_private_shares }}"
   notify: Restart smbd service
 
 - name: Allow all handlers to run

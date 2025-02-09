@@ -40,12 +40,13 @@ nfs_network: "{{ local_network }}"
 nfs_shares:
   - "{{ _drives.media_server_data }}"
 
-samba:
-  private:
-    - name: media-server-data
-      share: "{{ _drives.media_server_data }}"
-      user: "{{ ansible_user }}"
-      password: "{{ vault_samba_password }}"
+###### Samba
+
+samba_private_shares:
+  - name: media-server-data
+    share: "{{ _drives.media_server_data }}"
+    user: "{{ ansible_user }}"
+    password: "{{ vault_samba_password }}"
 
 ### Docker
 

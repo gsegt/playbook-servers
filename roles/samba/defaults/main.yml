@@ -1,0 +1,10 @@
+---
+samba_private_shares:
+  - name: share1
+    share: /path/to/share1
+    user: user1
+    password: password1
+  - name: share2
+    share: /path/to/share2
+    user: user2
+    password: password2

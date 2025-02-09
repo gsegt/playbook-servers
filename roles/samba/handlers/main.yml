@@ -14,7 +14,8 @@
   ansible.builtin.shell:
     cmd: |
       set -o pipefail
-      printf "{{ samba.private.password }}\n{{ samba.private.password }}\n" | smbpasswd -s -a {{ samba.private.user }}
+      printf "{{ item.password }}\n{{ item.password }}\n" | smbpasswd -s -a {{ item.user }}
     executable: /bin/bash
+  loop: "{{ samba_private_shares }}"
   register: samba_password_added
   changed_when: samba_password_added.rc != 0
