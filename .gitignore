@@ -1,4 +1,5 @@
 ### Ansible files
+.ansible/
 vault.yml
 
 ### Python venv
