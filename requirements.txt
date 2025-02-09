@@ -5,10 +5,10 @@ setuptools
 
 # Linting and formatting
 ruff
+ansible-lint
 
 # Test
 
 # Project
 ansible
-ansible-lint
 defusedxml
