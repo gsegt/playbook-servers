@@ -50,8 +50,7 @@ samba_private_shares:
 
 ### Docker
 
-_docker:
-  base_infra: /opt/docker
+_docker_base_infra: /opt/docker
 
 ###### DIUN
 
@@ -59,11 +58,11 @@ diun_schedule: 0 0 4 * * 6 # Every saturday at 04h00
 
 ###### Media Server
 
-media_server_infra: "{{ _docker.base_infra }}/media-server/"
+media_server_infra: "{{ _docker_base_infra }}/media-server/"
 media_server_data: "{{ _drives.media_server_data }}"
 media_server_subnet: 172.31.255.0/24
 
 ###### Caddy
 
-caddy_infra: "{{ _docker.base_infra }}/caddy/"
+caddy_infra: "{{ _docker_base_infra }}/caddy/"
 caddy_subnet: 172.31.251.0/24
