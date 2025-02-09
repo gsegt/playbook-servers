@@ -35,7 +35,7 @@
         ],
     },
     // Project specific
-    "ansible.python.interpreterPath": "/bin/python3",
+    "ansible.python.interpreterPath": "${workspaceFolder}/.venv/bin/python",
     "files.associations": {
         "*docker-compose*": "dockercompose",
         "*fish*": "fish",
