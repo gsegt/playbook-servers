@@ -1,154 +1,16 @@
 [tool.ruff]
-# Max line length
-line-length = 100
 
-# Assume Python 3.12.
+line-length = 100
 target-version = "py312"
 
-# Exclude a variety of commonly ignored directories.
-exclude = [
-    ".bzr",
-    ".direnv",
-    ".eggs",
-    ".git",
-    ".hg",
-    ".mypy_cache",
-    ".nox",
-    ".pants.d",
-    ".pytype",
-    ".ruff_cache",
-    ".svn",
-    ".tox",
-    ".venv",
-    ".env",
-    "__pypackages__",
-    "_build",
-    "buck-out",
-    "build",
-    "dist",
-    "node_modules",
-    "venv",
-    "env",
-]
-
 [tool.ruff.lint]
-select = [
-    "F",   # Pyflakes
-    "E",   # Pycodestyle errors
-    "W",   # Pycodestyle warnings
-    "C90", # mccabe
-    "I",   # isort
-    "N",   # pep8-naming
-    # "D",   # pydostyle
-    "UP",  # pyupgrade
-    "YTT", # flake8-2020
-    "ANN", # flake8-annotations
-    "S",   # flake8-bandit
-    "BLE", # flake8-blind-except
-    "FBT", # flake8-boolean-trap
-    "B",   # flake8-bugbear
-    "A",   # flake8-builtins
-    "COM", # flake8-builtins
-    "C4",  # flake8-comprehensions
-    "DTZ", # flake8-datetimez
-    "T10", # flake8-debugger
-    "DJ",  # flake8-django
-    "EM",  # flake8-errmsg
-    "EXE", # flake8-executable
-    "ISC", # flake8-implicit-str-concat
-    "ICN", # flake8-import-conventions
-    "G",   # flake8-logging-format
-    "INP", # flake8-no-pep420
-    "PIE", # flake8-pie
-    "PYI", # flake8-pyi
-    "PT",  # flake8-pytest-style
-    "Q",   # flake8-quotes
-    "RSE", # flake8-raise
-    "RET", # flake8-return
-    "SLF", # flake8-self
-    "SIM", # flake8-simplify
-    "TID", # flake8-tidy-imports
-    "TCH", # flake8-type-checking
-    "ARG", # flake8-unused-arguments
-    "PTH", # flake8-use-pathlib
-    "ERA", # eradicate
-    "PD",  # pandas-vet
-    "PGH", # pygrep-hooks
-    "PL",  # Pylint
-    "PLC", # Convention
-    "PLE", # Error
-    "PLR", # Refactor
-    "PLW", # Warning
-    "TRY", # tryceratops
-    "NPY", # NumPy-specific rules
-    "RUF", # Ruff-specific rules
-]
+
+select = ["ALL"]
 ignore = [
+    "D",      # pydostyle
     "T20",    # flake8-print trigger on every print or pprint
     "D203",   # one-blank-line-before-class
     "D213",   # multi-line-summary-second-line
     "ISC001", # Implicitly concatenated string literals on one line - Conflicts with formatter
     "COM812", # Trailing comma missing - Conflicts with formatter
 ]
-
-# Allow autofix for all enabled rules (when `--fix`) is provided.
-fixable = [
-    "F",   # Pyflakes
-    "E",   # Pycodestyle errors
-    "W",   # Pycodestyle warnings
-    "C90", # mccabe
-    "I",   # isort
-    "N",   # pep8-naming
-    # "D",   # pydocstyle
-    "UP",  # pyupgrade
-    "YTT", # flake8-2020
-    "ANN", # flake8-annotations
-    "S",   # flake8-bandit
-    "BLE", # flake8-blind-except
-    "FBT", # flake8-boolean-trap
-    "B",   # flake8-bugbear
-    "A",   # flake8-builtins
-    "COM", # flake8-builtins
-    "C4",  # flake8-comprehensions
-    "DTZ", # flake8-datetimez
-    "T10", # flake8-debugger
-    "DJ",  # flake8-django
-    "EM",  # flake8-errmsg
-    "EXE", # flake8-executable
-    "ISC", # flake8-implicit-str-concat
-    "ICN", # flake8-import-conventions
-    "G",   # flake8-logging-format
-    "INP", # flake8-no-pep420
-    "PIE", # flake8-pie
-    "T20", # flake8-print
-    "PYI", # flake8-pyi
-    "PT",  # flake8-pytest-style
-    "Q",   # flake8-quotes
-    "RSE", # flake8-raise
-    "RET", # flake8-return
-    "SLF", # flake8-self
-    "SIM", # flake8-simplify
-    "TID", # flake8-tidy-imports
-    "TCH", # flake8-type-checking
-    "ARG", # flake8-unused-arguments
-    "PTH", # flake8-use-pathlib
-    "ERA", # eradicate
-    "PD",  # pandas-vet
-    "PGH", # pygrep-hooks
-    "PL",  # Pylint
-    "PLC", # Convention
-    "PLE", # Error
-    "PLR", # Refactor
-    "PLW", # Warning
-    "TRY", # tryceratops
-    "NPY", # NumPy-specific rules
-    "RUF", # Ruff-specific rules
-]
-unfixable = []
-
-# Allow unused variables when underscore-prefixed.
-dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
-
-[tool.ruff.lint.mccabe]
-# Unlike Flake8, default to a complexity level of 10.
-max-complexity = 10
