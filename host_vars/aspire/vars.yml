@@ -55,8 +55,7 @@ _docker:
 
 ###### DIUN
 
-diun:
-  schedule: 0 0 4 * * 6 # Every saturday at 04h00
+diun_schedule: 0 0 4 * * 6 # Every saturday at 04h00
 
 ###### Media Server
 
