@@ -26,5 +26,16 @@
     enabled: true
     state: started
 
+- name: Share ZFS pools over nfs
+  become: true
+  community.general.zfs:
+    name: "{{ item }}"
+    state: present
+    extra_zfs_properties: |
+      sharenfs="rw=@{{ nfs_network }}
+  loop: "{{ nfs_shares.zfs }}"
+  when: nfs_shares is defined and nfs_shares.zfs | length > 0
+
+
 - name: Allow all handlers to run
   ansible.builtin.meta: flush_handlers

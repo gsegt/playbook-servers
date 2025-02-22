@@ -1,5 +1,9 @@
 ---
 nfs_network: 0.0.0.0
 nfs_shares:
-  - share1
-  - share2
+  system:
+    - path1
+    - path2
+  zfs:
+    - zpool1
+    - zpool2

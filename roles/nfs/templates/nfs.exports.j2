@@ -1,5 +1,7 @@
 # {{ ansible_managed }}
 
-{% for nfs_share in nfs_shares %}
+{% if nfs_shares.system %}
+{% for nfs_share in nfs_shares.system %}
 {{ nfs_share }} {{ nfs_network }}(rw)
 {% endfor %}
+{% endif %}

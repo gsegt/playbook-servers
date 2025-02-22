@@ -6,11 +6,10 @@
       - samba
     state: present
 
-- name: Add a user for private share
+- name: Add samba user
   become: true
   ansible.builtin.user:
-    name: "{{ item.user }}"
-  loop: "{{ samba_private_shares }}"
+    name: "{{ samba_user }}"
   notify:
     - Reboot
     - Add samba password to user
@@ -21,17 +20,28 @@
     name: smbd
     enabled: true
 
-- name: Create samba folder for private share
+- name: Share ZFS pools over samba
+  become: true
+  community.general.zfs:
+    name: "{{ item.name }}"
+    state: present
+    extra_zfs_properties: |
+      sharesmb=on
+  loop: "{{ samba_shares.zfs }}"
+  when: samba_shares is defined and samba_shares.zfs | length > 0
+
+- name: Create paths with proper access for all shares
   become: true
   ansible.builtin.file:
-    path: "{{ item.share }}"
+    path: "{{ item.path }}"
     state: directory
     mode: "0755"
-    owner: "{{ item.user }}"
-    group: "{{ item.user }}"
-  loop: "{{ samba_private_shares }}"
+    owner: "{{ samba_user }}"
+    group: "{{ samba_user }}"
+  loop: "{{ samba_shares.system + samba_shares.zfs }}"
+  when: samba_shares is defined and (samba_shares.system | length > 0 or samba_shares.zfs | length > 0)
 
-- name: Adding the configuration for private shares
+- name: Add system shares to samba conf
   become: true
   ansible.builtin.blockinfile:
     marker: "# {mark} {{ item.name }} share"
@@ -39,14 +49,15 @@
     insertafter: EOF
     block: |
       [{{ item.name }}]
-      path = {{ item.share }}
-      valid users = {{ item.user }}
+      path = {{ item.path }}
+      valid users = {{ samba_user }}
       public = no
       writeable = yes
     backup: true
     prepend_newline: true
-  loop: "{{ samba_private_shares }}"
+  loop: "{{ samba_shares.system }}"
   notify: Restart smbd service
+  when: samba_shares is defined and samba_shares.system | length > 0
 
 - name: Allow all handlers to run
   ansible.builtin.meta: flush_handlers

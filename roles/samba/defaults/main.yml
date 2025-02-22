@@ -1,10 +1,10 @@
 ---
-samba_private_shares:
-  - name: share1
-    share: /path/to/share1
-    user: user1
-    password: password1
-  - name: share2
-    share: /path/to/share2
-    user: user2
-    password: password2
+samba_user: user1
+samba_password: password1
+samba_shares:
+  system:
+    - name: share1
+      share: /path/to/share1
+  zfs:
+    - name: zpool1
+      share: /path/to/zpool1

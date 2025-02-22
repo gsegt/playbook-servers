@@ -28,22 +28,34 @@ dropbear_authorized_keys:
 ### Network Sharing
 
 _drives:
-  media_server_data: /media/external/media-server-data
+  zfs:
+    data_vault:
+      mountpoint: /media/external
+      media_server: data-vault/media-server
+      private: data-vault/private
 
 
 ###### NFS
 
 nfs_network: "{{ home_local_network }}"
 nfs_shares:
-  - "{{ _drives.media_server_data }}"
+  system: []
+  zfs:
+    - "{{ _drives.zfs.data_vault.private }}"
+    - "{{ _drives.zfs.data_vault.media_server }}"
+
 
 ###### Samba
 
-samba_private_shares:
-  - name: media-server-data
-    share: "{{ _drives.media_server_data }}"
-    user: "{{ ansible_user }}"
-    password: "{{ vault_samba_password }}"
+samba_user: "{{ ansible_user }}"
+samba_password: "{{ vault_samba_password }}"
+samba_shares:
+  system: []
+  zfs:
+    - name: "{{ _drives.zfs.data_vault.private }}"
+      path: "{{ _drives.zfs.data_vault.mountpoint }}/{{ _drives.zfs.data_vault.private }}"
+    - name: "{{ _drives.zfs.data_vault.media_server }}"
+      path: "{{ _drives.zfs.data_vault.mountpoint }}/{{ _drives.zfs.data_vault.media_server }}"
 
 ### Docker
 
@@ -56,7 +68,7 @@ diun_schedule: 0 0 4 * * 6 # Every saturday at 04h00
 ###### Media Server
 
 media_server_infra: "{{ _docker_base_infra }}/media-server/"
-media_server_data: "{{ _drives.media_server_data }}"
+media_server_data: "{{ _drives.zfs.data_vault.mountpoint }}/{{ _drives.zfs.data_vault.media_server }}"
 media_server_subnet: 172.31.255.0/24
 
 ###### Caddy
