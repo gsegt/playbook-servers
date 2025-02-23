@@ -14,7 +14,14 @@
     default_release: "{{ ansible_distribution_release }}-backports"
     state: present
 
-- name: Enable and start ZFS mount services
+- name: Copy ZFS auto key loading service file
+  become: true
+  ansible.builtin.template:
+    src: zfs-load-key.service.j2
+    dest: /etc/systemd/system/zfs-load-key.service
+    mode: "0644"
+
+- name: Enable and start ZFS mount services and Load keys service
   become: true
   ansible.builtin.systemd:
     name: "{{ item }}"
@@ -23,3 +30,4 @@
     masked: false
   with_items:
     - zfs.target
+    - zfs-load-key.service
