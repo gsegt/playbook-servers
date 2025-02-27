@@ -1,3 +1,4 @@
+---
 name: ansible-lint
 run-name: Check Ansible files linting repo with ansible-lint
 on: [push]

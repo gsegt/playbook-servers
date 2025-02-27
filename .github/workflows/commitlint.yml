@@ -1,3 +1,4 @@
+---
 name: commitlint
 run-name: Check commit format with commitlint
 on: [push, pull_request]
