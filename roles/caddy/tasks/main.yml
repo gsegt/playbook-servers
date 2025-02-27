@@ -16,6 +16,12 @@
   with_community.general.filetree: "../templates"
   when: item.state == 'directory'
 
+- name: Create caddyfiles folder
+  ansible.builtin.file:
+    path: "{{ caddy_caddyfiles_folder }}"
+    state: directory
+    mode: "0755"
+
 - name: Copy all docker related caddy infrastructure files
   ansible.builtin.template:
     src: "{{ item.path }}"
@@ -44,6 +50,7 @@
     volumes:
       - caddy-data:/data"
       - "{{ caddy_infra }}/Caddyfile:/etc/caddy/Caddyfile"
+      - "{{ caddy_caddyfiles_folder }}:/etc/caddy/caddyfiles"
     published_ports:
       - "80:80"
       - "443:443"

@@ -74,4 +74,5 @@ media_server_subnet: 172.31.255.0/24
 ###### Caddy
 
 caddy_infra: "{{ _docker_base_infra }}/caddy/"
+caddy_caddyfiles_folder: "{{ caddy_infra }}/caddyfiles/"
 caddy_subnet: 172.31.251.0/24

@@ -2,10 +2,4 @@
     email {{ vault_reverse_proxy_email }}
 }
 
-jellyfin.{{ vault_base_domain }} {
-    reverse_proxy jellyfin:8096
-}
-
-jellyseerr.{{ vault_base_domain }} {
-    reverse_proxy jellyseerr:5055
-}
+import caddyfiles/*
