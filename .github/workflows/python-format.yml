@@ -10,5 +10,7 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.x"
-      - run: pip install -U -r requirements.txt
-      - run: ruff format --check
+      - name: Install Python dependencies
+        run: pip install -U -r requirements.txt
+      - name: Check Python code format with ruff
+        run: ruff format --check
