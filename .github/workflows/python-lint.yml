@@ -1,3 +1,4 @@
+---
 name: ruff-check
 run-name: Check Python code linting with ruff
 on: [push]

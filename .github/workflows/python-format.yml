@@ -1,3 +1,4 @@
+---
 name: ruff-format
 run-name: Check Python code format with ruff
 on: [push]
