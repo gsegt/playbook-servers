@@ -15,4 +15,5 @@
     - role: caddy
     - role: media_server
     - role: joplin
+    - role: nextcloud
     - role: diun

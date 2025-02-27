@@ -1,0 +1,62 @@
+---
+# {{ ansible_managed }}
+
+x-restart: &restart unless-stopped
+x-pull_policy: &pull_policy always
+x-puid: &puid PUID={{ ansible_user_uid }}
+x-pgid: &pgid PGID={{ ansible_user_gid }}
+x-tz: &tz TZ={{ home_timezone }}
+
+name: &name nextcloud
+
+services:
+  nextcloud:
+    container_name: nextcloud
+    image: lscr.io/linuxserver/nextcloud:latest
+    pull_policy: *pull_policy
+    restart: *restart
+    environment:
+      - *puid
+      - *pgid
+      - *tz
+    volumes:
+      - nextcloud-config:/config
+      - "{{ nextcloud_data }}:/data"
+    ports:
+      - 9443:443
+    depends_on:
+      - nextcloud-mariadb
+    networks:
+      - default
+      - caddy
+
+  nextcloud-mariadb:
+    container_name: nextcloud-mariadb
+    image: lscr.io/linuxserver/mariadb:latest
+    pull_policy: *pull_policy
+    restart: *restart
+    environment:
+      - *puid
+      - *pgid
+      - *tz
+      - MYSQL_USER=nextcloud
+      - MYSQL_ROOT_PASSWORD={{ nextcloud_vault_db_root_password }}
+      - MYSQL_PASSWORD={{ nextcloud_vault_db_password }}
+      - MYSQL_DATABASE=nextcloud
+    volumes:
+      - nextcloud-mariadb-config:/config
+    ports:
+      - 3306:3306
+
+volumes:
+  nextcloud-config:
+    name: nextcloud-config
+  nextcloud-mariadb-config:
+    name: nextcloud-mariadb-config
+
+networks:
+  default:
+    name: *name
+  caddy:
+    name: caddy
+    external: true
