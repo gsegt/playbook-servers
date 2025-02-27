@@ -1,0 +1,60 @@
+---
+# {{ ansible_managed }}
+
+x-restart: &restart unless-stopped
+x-pull_policy: &pull_policy always
+
+name: &name joplin
+
+services:
+  joplin:
+    container_name: joplin
+    image: joplin/server:latest
+    pull_policy: *pull_policy
+    restart: *restart
+    environment:
+      - APP_PORT=22300
+      - APP_BASE_URL=https://joplin.{{ vault_base_domain }}
+      - DB_CLIENT=pg
+      - POSTGRES_PASSWORD={{ joplin_vault_db_password }}
+      - POSTGRES_DATABASE=joplin
+      - POSTGRES_USER=joplin
+      - POSTGRES_PORT=5432
+      - POSTGRES_HOST=joplin-postgres
+      - STORAGE_DRIVER=Type=Filesystem; Path=/data
+    volumes:
+      - "{{ joplin_data }}:/data"
+    ports:
+      - 22300:22300
+    depends_on:
+      - joplin-postgres
+    networks:
+      - default
+      - caddy
+
+  joplin-postgres:
+    container_name: joplin-postgres
+    image: postgres:16-alpine
+    pull_policy: *pull_policy
+    restart: *restart
+    environment:
+      - POSTGRES_PASSWORD={{ joplin_vault_db_password }}
+      - POSTGRES_USER=joplin
+      - POSTGRES_DB=joplin
+    volumes:
+      - joplin-postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+volumes:
+  joplin-config:
+    name: joplin-config
+  joplin-postgres-data:
+    name: joplin-postgres-data
+
+networks:
+  default:
+    name: *name
+  caddy:
+    name: caddy
+    external: true

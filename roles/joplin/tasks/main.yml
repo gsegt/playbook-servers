@@ -1,0 +1,49 @@
+---
+- name: Create joplin infrastructure root folders
+  become: true
+  ansible.builtin.file:
+    path: "{{ joplin_infra }}"
+    state: directory
+    mode: "0755"
+    owner: "{{ ansible_user_uid }}"
+    group: "{{ ansible_user_gid }}"
+
+- name: Create all docker related joplin infrastructure folders
+  ansible.builtin.file:
+    path: "{{ joplin_infra }}/{{ item.path }}"
+    state: directory
+    mode: "0755"
+  with_community.general.filetree: "../templates"
+  when:
+    - item.state == 'directory'
+
+- name: Copy all docker related joplin infrastructure files
+  ansible.builtin.template:
+    src: "{{ item.path }}"
+    dest: "{{ joplin_infra }}/{{ item.path | replace('.j2', '') }}"
+    mode: "0644"
+  with_community.general.filetree: "../templates"
+  when:
+    - item.state == 'file'
+    - "'Caddyfile' not in item.path"
+
+- name: Copy Caddyfile
+  ansible.builtin.template:
+    src: Caddyfile.j2
+    dest: "{{ caddy_caddyfiles_folder }}/{{ role_name }}"
+    mode: "0644"
+  notify: Restart Caddy
+
+- name: Create joplin data folders
+  become: true
+  ansible.builtin.file:
+    path: "{{ joplin_data }}"
+    state: directory
+    mode: "0755"
+    owner: 1001  # joplin uid
+    group: 1001  # joplin gid
+
+- name: Start the joplin services
+  community.docker.docker_compose_v2:
+    project_src: "{{ joplin_infra }}"
+    remove_orphans: true
