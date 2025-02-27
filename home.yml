@@ -12,6 +12,6 @@
     - role: nfs
     - role: samba
     - role: docker
+    - role: caddy
     - role: media_server
     - role: diun
-    - role: caddy

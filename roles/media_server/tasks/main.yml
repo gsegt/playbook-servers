@@ -33,6 +33,14 @@
   when:
     - item.state == 'file'
     - "'recyclarr' not in item.path"
+    - "'Caddyfile' not in item.path"
+
+- name: Copy caddyfile
+  ansible.builtin.template:
+    src: Caddyfile.j2
+    dest: "{{ caddy_caddyfiles_folder }}/{{ role_name }}"
+    mode: "0644"
+  notify: Restart Caddy
 
 - name: Start the media server services
   community.docker.docker_compose_v2:
