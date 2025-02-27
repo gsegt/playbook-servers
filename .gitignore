@@ -12,3 +12,8 @@ roles/00-archives/
 
 ## debug files
 *debug*
+
+## npm
+
+package*.json
+node_modules/
