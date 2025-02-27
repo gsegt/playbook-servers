@@ -1,0 +1,4 @@
+---
+joplin_vault_db_password: CHANGE_ME
+joplin_infra: /path/to/infra/
+joplin_data: /path/to/data/
