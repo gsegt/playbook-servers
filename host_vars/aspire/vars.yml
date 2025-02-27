@@ -76,6 +76,11 @@ media_server_subnet: 172.31.255.0/24
 joplin_infra: "{{ _docker_base_infra }}/joplin/"
 joplin_data: "{{ _drives.zfs.data_vault.mountpoint }}/{{ _drives.zfs.data_vault.private }}/volumes/joplin/data/"
 
+###### Nextcloud
+
+nextcloud_infra: "{{ _docker_base_infra }}/nextcloud/"
+nextcloud_data: "{{ _drives.zfs.data_vault.mountpoint }}/{{ _drives.zfs.data_vault.private }}/volumes/nextcloud/data/"
+
 ###### Caddy
 
 caddy_infra: "{{ _docker_base_infra }}/caddy/"

@@ -1,0 +1,8 @@
+# {{ ansible_managed }}
+
+nextcloud.{{ vault_base_domain }} {
+    redir /.well-known/carddav /remote.php/dav/ 301
+    redir /.well-known/caldav /remote.php/dav/ 301
+
+    reverse_proxy nextcloud:80
+}
