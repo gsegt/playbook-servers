@@ -1,0 +1,68 @@
+---
+# {{ ansible_managed }}
+
+x-restart: &restart unless-stopped
+x-pull_policy: &pull_policy always
+x-tz: &tz TZ={{ home_timezone }}
+
+name: &name mealie
+
+services:
+  mealie:
+    container_name: mealie
+    image: ghcr.io/mealie-recipes/mealie:latest
+    pull_policy: *pull_policy
+    restart: *restart
+    environment:
+      # Set Backend ENV Variables Here
+      ALLOW_SIGNUP: "false"
+      TZ: *tz
+      BASE_URL: https://mealie.{{ vault_base_domain }}
+      # Database Settings
+      DB_ENGINE: postgres
+      POSTGRES_USER: mealie
+      POSTGRES_PASSWORD: "{{ mealie_vault_db_password }}"
+      POSTGRES_SERVER: mealie-postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: mealie
+    volumes:
+      - mealie-data:/app/data/
+    ports:
+        - 9925:9000
+    networks:
+      - default
+      - caddy
+    depends_on:
+      mealie-postgres:
+        condition: service_healthy
+
+  mealie-postgres:
+    container_name: mealie-postgres
+    image: postgres:15-alpine
+    pull_policy: *pull_policy
+    restart: *restart
+    environment:
+      POSTGRES_PASSWORD: "{{ mealie_vault_db_password }}"
+      POSTGRES_USER: mealie
+      PGUSER: mealie
+    volumes:
+      - mealie-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+volumes:
+  mealie-data:
+    name: mealie-data
+  mealie-postgres-data:
+    name: mealie-postgres-data
+
+
+networks:
+  default:
+    name: *name
+  caddy:
+    name: caddy
+    external: true

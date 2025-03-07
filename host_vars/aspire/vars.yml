@@ -81,6 +81,10 @@ joplin_data: "{{ _drives.zfs.data_vault.mountpoint }}/{{ _drives.zfs.data_vault.
 nextcloud_infra: "{{ _docker_base_infra }}/nextcloud/"
 nextcloud_data: "{{ _drives.zfs.data_vault.mountpoint }}/{{ _drives.zfs.data_vault.private }}/volumes/nextcloud/data/"
 
+###### Mealie
+
+mealie_infra: "{{ _docker_base_infra }}/mealie/"
+
 ###### Caddy
 
 caddy_infra: "{{ _docker_base_infra }}/caddy/"
