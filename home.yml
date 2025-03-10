@@ -17,4 +17,5 @@
     - role: joplin
     - role: nextcloud
     - role: mealie
+    - role: immich
     - role: diun

@@ -85,6 +85,11 @@ nextcloud_data: "{{ _drives.zfs.data_vault.mountpoint }}/{{ _drives.zfs.data_vau
 
 mealie_infra: "{{ _docker_base_infra }}/mealie/"
 
+###### immich
+
+immich_infra: "{{ _docker_base_infra }}/immich/"
+immich_upload: "{{ _drives.zfs.data_vault.mountpoint }}/{{ _drives.zfs.data_vault.private }}/volumes/immich/data/"
+
 ###### Caddy
 
 caddy_infra: "{{ _docker_base_infra }}/caddy/"

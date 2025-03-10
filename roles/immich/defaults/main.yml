@@ -1,0 +1,4 @@
+---
+immich_vault_db_password: CHANGE_ME
+immich_infra: /path/to/infra/
+immich_upload: /path/to/upload/

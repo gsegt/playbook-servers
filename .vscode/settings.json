@@ -80,6 +80,7 @@
         "getent",
         "healthcheck",
         "imax",
+        "immich",
         "insertafter",
         "isready",
         "iwlwifi",
