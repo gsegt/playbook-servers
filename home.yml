@@ -12,6 +12,7 @@
     - role: nfs
     - role: samba
     - role: docker
+    - role: kubernetes
     - role: caddy
     - role: media_server
     - role: joplin
