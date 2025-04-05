@@ -1,0 +1,6 @@
+- name: Install Minikube
+  become: true
+  ansible.builtin.get_url:
+    url: https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
+    dest: /usr/local/bin/minikube
+    mode: "0755"
