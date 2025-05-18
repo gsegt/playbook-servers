@@ -4,9 +4,11 @@
 set -g fish_greeting
 
 # Environment variables
+### Home environment variables
 {% for var in home_env_vars %}
 set -gx {{ var }}
 {% endfor %}
+### Host environment variables
 {% if host_env_vars is defined %}
 {% for var in host_env_vars %}
 set -gx {{ var }}
