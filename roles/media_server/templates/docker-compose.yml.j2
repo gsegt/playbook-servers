@@ -101,14 +101,15 @@ services:
     restart: *restart
     ports:
       - 8080:8080
-      - 6881:6881
-      - 6881:6881/udp
-      - 51820:51820/udp
+      - "{{ media_server_vault_wireguard_conf.torrenting_port }}:{{ media_server_vault_wireguard_conf.torrenting_port }}"
+      - "{{ media_server_vault_wireguard_conf.torrenting_port }}:{{ media_server_vault_wireguard_conf.torrenting_port }}/udp"
+      - "{{ media_server_wireguard_port }}:{{ media_server_wireguard_port }}/udp"
     environment:
       - *puid
       - *pgid
       - *tz
       - WEBUI_PORT=8080
+      - TORRENTING_PORT={{ media_server_vault_wireguard_conf.torrenting_port }}
     volumes:
       - *torrents
       - qbittorrent-wireguard-config:/config

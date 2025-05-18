@@ -1,17 +1,21 @@
 # {{ ansible_managed }}
 
 [Interface]
-# Device: {{ vault_wireguard.device_name }}
-PrivateKey = {{ vault_wireguard.private_key }}
-Address = {{ vault_wireguard.address }}
-DNS = {{ vault_wireguard.dns }}
-PostUp = ip route add {{ home_local_network }} via $(ip route | grep default | awk '{print $3}') && iptables -I OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL ! -d {{ home_local_network }} -j REJECT && iptables -I OUTPUT -d {{ media_server_subnet }} -j ACCEPT
-PreDown = iptables -D OUTPUT -d {{ media_server_subnet }} -j ACCEPT && iptables -D OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL ! -d {{ home_local_network }} -j REJECT && ip route del {{ home_local_network }} via $(ip route | grep default | awk '{print $3}')
+# Device: {{ media_server_vault_wireguard_conf.device_name }}
+PrivateKey = {{ media_server_vault_wireguard_conf.private_key }}
+Address = {{ media_server_vault_wireguard_conf.address }}
+DNS = {{ media_server_vault_wireguard_conf.dns }}
+MTU = {{ media_server_vault_wireguard_conf.mtu }}
+ListenPort = {{ media_server_wireguard_port }}
+PostUp = sh /etc/wireguard/post_up.sh %i
+PreDown = sh /etc/wireguard/pre_down.sh %i
 
-{% for peer in vault_wireguard.peers %}
+{% for peer in media_server_vault_wireguard_conf.peers %}
 [Peer]
 PublicKey = {{ peer.public_key }}
+PresharedKey = {{ peer.preshared_key }}
 AllowedIPs = {{ peer.allowed_ip }}
 Endpoint = {{ peer.endpoint }}
+PersistentKeepalive = {{ peer.persistent_keepalive }}
 
 {% endfor %}

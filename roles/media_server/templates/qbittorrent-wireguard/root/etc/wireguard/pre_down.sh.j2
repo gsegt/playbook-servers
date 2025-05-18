@@ -1,0 +1,5 @@
+#!/bin/sh
+iptables -D OUTPUT -d {{ media_server_subnet }} -j ACCEPT
+ip6tables -D OUTPUT ! -o $1 -m mark ! --mark $(wg show $1 fwmark) -m addrtype ! --dst-type LOCAL -j REJECT
+iptables -D OUTPUT ! -o $1 -m mark ! --mark $(wg show $1 fwmark) -m addrtype ! --dst-type LOCAL ! -d {{ home_local_network }} -j REJECT
+ip route del {{ home_local_network }} via $(ip route | grep default | awk '{print $3}')
