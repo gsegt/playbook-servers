@@ -16,6 +16,8 @@ host_firmware_packages:
   # - bumblebee-nvidia
   # - primus-nvidia
   # - primus-vk-nvidia
+host_env_vars:
+  - COMPOSE_BAKE true
 
 ### Dropbear
 
@@ -70,6 +72,7 @@ diun_schedule: 0 0 4 * * 6 # Every saturday at 04h00
 media_server_infra: "{{ _docker_base_infra }}/media-server/"
 media_server_data: "{{ _drives.zfs.data_vault.mountpoint }}/{{ _drives.zfs.data_vault.media_server }}"
 media_server_subnet: 172.31.255.0/24
+media_server_wireguard_port: 1637  # 51820
 
 ###### Joplin
 
