@@ -20,7 +20,7 @@ services:
       - *pgid
       - *tz
     volumes:
-      - nextcloud-config:/config
+      - "{{ nextcloud_config }}:/config"
       - "{{ nextcloud_data }}:/data"
     ports:
       - 9443:443
@@ -44,15 +44,9 @@ services:
       - MYSQL_PASSWORD={{ nextcloud_vault_db_password }}
       - MYSQL_DATABASE=nextcloud
     volumes:
-      - nextcloud-mariadb-config:/config
+      - "{{ nextcloud_mariadb_config }}:/config"
     ports:
       - 3306:3306
-
-volumes:
-  nextcloud-config:
-    name: nextcloud-config
-  nextcloud-mariadb-config:
-    name: nextcloud-mariadb-config
 
 networks:
   default:

@@ -1,7 +1,7 @@
 ---
-###### Nextcloud
-
-nextcloud_vault_db_password: nextcloud
-nextcloud_vault_db_root_password: nextcloud
-nextcloud_infra: "{{ _docker.base_infra }}/nextcloud/"
-nextcloud_data: "{{ _drives.redundant_data }}/volumes/nextcloud/data/"
+nextcloud_vault_db_password: CHANGE_ME
+nextcloud_vault_db_root_password: CHANGE_ME
+nextcloud_infra: /path/to/infra/folder
+nextcloud_data: /path/to/data/volume
+nextcloud_config: /path/to/config/volume
+nextcloud_mariadb_config: /path/to/mariadb/config/volume

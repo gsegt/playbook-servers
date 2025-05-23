@@ -2,21 +2,21 @@
 - name: Extract the Radarr ApiKey
   become: true
   extract_xml_key_text:
-    xml_file_path: /var/lib/docker/volumes/radarr-config/_data/config.xml
+    xml_file_path: "{{ media_server_radarr_config }}/config.xml"
     xml_key_xpath: ApiKey
   register: radarr_api
 
 - name: Extract the Sonarr ApiKey
   become: true
   extract_xml_key_text:
-    xml_file_path: /var/lib/docker/volumes/sonarr-config/_data/config.xml
+    xml_file_path: "{{ media_server_sonarr_config }}/config.xml"
     xml_key_xpath: ApiKey
   register: sonarr_api
 
 - name: Create recyclarr related folders
   become: true
   ansible.builtin.file:
-    path: /var/lib/docker/volumes/recyclarr-config/_data/{{ item.path | regex_replace('^recyclarr/', '') }}
+    path: "{{ media_server_recyclarr_config }}/{{ item.path | regex_replace('^recyclarr/', '') }}"
     state: directory
     mode: "0755"
     owner: "{{ ansible_user_uid }}"
@@ -31,7 +31,7 @@
   become: true
   ansible.builtin.template:
     src: "{{ item.path }}"
-    dest: /var/lib/docker/volumes/recyclarr-config/_data/{{ item.path | regex_replace('^recyclarr/', '') | replace('.j2', '') }}
+    dest: "{{ media_server_recyclarr_config }}/{{ item.path | regex_replace('^recyclarr/', '') | replace('.j2', '') }}"
     mode: "0644"
     owner: "{{ ansible_user_uid }}"
     group: "{{ ansible_user_gid }}"

@@ -61,40 +61,64 @@ samba_shares:
 
 ### Docker
 
-_docker_base_infra: /opt/docker
+docker_base_infra: "{{ _drives.zfs.data_vault.mountpoint }}/{{ _drives.zfs.data_vault.private }}/containers"
 
 ###### DIUN
 
+diun_infra: "{{ docker_base_infra }}/diun/infra"
+_diun_volumes: "{{ docker_base_infra }}/diun/volumes"
+diun_data: "{{ _diun_volumes }}/data"
 diun_schedule: 0 0 4 * * 6 # Every saturday at 04h00
 
 ###### Media Server
 
-media_server_infra: "{{ _docker_base_infra }}/media-server/"
+media_server_infra: "{{ docker_base_infra }}/media-server/infra"
+_media_server_volumes: "{{ docker_base_infra }}/media-server/volumes"
 media_server_data: "{{ _drives.zfs.data_vault.mountpoint }}/{{ _drives.zfs.data_vault.media_server }}"
+media_server_bazarr_config: "{{ _media_server_volumes }}/bazarr/config"
+media_server_jellyfin_config: "{{ _media_server_volumes }}/jellyfin/config"
+media_server_jellyseerr_config: "{{ _media_server_volumes }}/jellyseerr/config"
+media_server_prowlarr_config: "{{ _media_server_volumes }}/prowlarr/config"
+media_server_qbittorrent_wireguard_config: "{{ _media_server_volumes }}/qbittorrent-wireguard/config"
+media_server_radarr_config: "{{ _media_server_volumes }}/radarr/config"
+media_server_recyclarr_config: "{{ _media_server_volumes }}/recyclarr/config"
+media_server_sonarr_config: "{{ _media_server_volumes }}/sonarr/config"
 media_server_subnet: 172.31.255.0/24
 media_server_wireguard_port: 1637  # 51820
 
 ###### Joplin
 
-joplin_infra: "{{ _docker_base_infra }}/joplin/"
-joplin_data: "{{ _drives.zfs.data_vault.mountpoint }}/{{ _drives.zfs.data_vault.private }}/volumes/joplin/data/"
+joplin_infra: "{{ docker_base_infra }}/joplin/infra"
+_joplin_volumes: "{{ docker_base_infra }}/joplin/volumes"
+joplin_data: "{{ _joplin_volumes }}/data"
+joplin_postgres_data: "{{ _joplin_volumes }}/postgres/data"
 
 ###### Nextcloud
 
-nextcloud_infra: "{{ _docker_base_infra }}/nextcloud/"
-nextcloud_data: "{{ _drives.zfs.data_vault.mountpoint }}/{{ _drives.zfs.data_vault.private }}/volumes/nextcloud/data/"
+nextcloud_infra: "{{ docker_base_infra }}/nextcloud/infra"
+_nextcloud_volumes: "{{ docker_base_infra }}/nextcloud/volumes"
+nextcloud_data: "{{ _nextcloud_volumes }}/data"
+nextcloud_config: "{{ _nextcloud_volumes }}/config"
+nextcloud_mariadb_config: "{{ _nextcloud_volumes }}/mariadb/config"
 
 ###### Mealie
 
-mealie_infra: "{{ _docker_base_infra }}/mealie/"
+mealie_infra: "{{ docker_base_infra }}/mealie/infra"
+_mealie_volumes: "{{ docker_base_infra }}/mealie/volumes"
+mealie_data: "{{ _mealie_volumes }}/data"
+mealie_postgres_data: "{{ _mealie_volumes }}/postgres/data"
 
 ###### immich
 
-immich_infra: "{{ _docker_base_infra }}/immich/"
-immich_upload: "{{ _drives.zfs.data_vault.mountpoint }}/{{ _drives.zfs.data_vault.private }}/volumes/immich/data/"
+immich_infra: "{{ docker_base_infra }}/immich/infra"
+_immich_volumes: "{{ docker_base_infra }}/immich/volumes"
+immich_upload: "{{ _immich_volumes }}/data"
+immich_postgres_data: "{{ _immich_volumes }}/postgres/data"
 
 ###### Caddy
 
-caddy_infra: "{{ _docker_base_infra }}/caddy/"
-caddy_caddyfiles_folder: "{{ caddy_infra }}/caddyfiles/"
+caddy_infra: "{{ docker_base_infra }}/caddy/infra"
+_caddy_volumes: "{{ docker_base_infra }}/caddy/volumes"
+caddy_data: "{{ _caddy_volumes }}/data"
+caddy_caddyfiles_folder: "{{ caddy_infra }}/caddyfiles"
 caddy_subnet: 172.31.251.0/24

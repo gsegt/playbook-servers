@@ -1,0 +1,30 @@
+---
+# {{ ansible_managed }}
+
+x-restart: &restart unless-stopped
+x-pull_policy: &pull_policy always
+
+name: &name caddy
+
+services:
+  caddy:
+    container_name: caddy
+    image: caddy:alpine
+    pull_policy: *pull_policy
+    restart: *restart
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - "{{ caddy_data }}:/data"
+      - "{{ caddy_infra }}/Caddyfile:/etc/caddy/Caddyfile"
+      - "{{ caddy_caddyfiles_folder }}:/etc/caddy/caddyfiles"
+    networks:
+      - default
+
+networks:
+  default:
+    name: *name
+    ipam:
+      config:
+        - subnet: "{{ caddy_subnet }}"

@@ -1,4 +1,5 @@
 ---
 immich_vault_db_password: CHANGE_ME
-immich_infra: /path/to/infra/
-immich_upload: /path/to/upload/
+immich_infra: /path/to/infra/folder
+immich_upload: /path/to/upload/volume
+immich_postgres_data: /path/to/postgres/data/volume
