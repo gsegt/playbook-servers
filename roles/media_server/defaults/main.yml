@@ -1,4 +1,13 @@
 ---
 media_server_infra: /path/to/infra/folder
 media_server_data: /path/to/data/volume
+media_server_bazarr_config: /path/to/bazarr/config/volume
+media_server_jellyfin_config: /path/to/jellyfin/config/volume
+media_server_jellyseerr_config: /path/to/jellyseerr/config/volume
+media_server_prowlarr_config: /path/to/prowlarr/config/volume
+media_server_qbittorrent_wireguard_config: /path/to/qbittorrent-wireguard/config/volume
+media_server_radarr_config: /path/to/radarr/config/volume
+media_server_recyclarr_config: /path/to/recyclarr/config/volume
+media_server_sonarr_config: /path/to/sonarr/config/volume
 media_server_subnet: 0.0.0.0/0
+media_server_wireguard_port: 0

@@ -1,0 +1,40 @@
+---
+# {{ ansible_managed }}
+
+x-restart: &restart unless-stopped
+x-pull_policy: &pull_policy always
+x-tz: &tz TZ={{ home_timezone }}
+
+name: &name diun
+
+services:
+  diun:
+    container_name: diun
+    image: ghcr.io/crazy-max/diun:latest
+    pull_policy: *pull_policy
+    restart: *restart
+    environment:
+      - *tz
+      - DIUN_WATCH_SCHEDULE={{ diun_schedule }}
+      - DIUN_NOTIF_MAIL_HOST={{ vault_email.smtp.host }}
+      - DIUN_NOTIF_MAIL_PORT={{ vault_email.smtp.startls }}
+      - DIUN_NOTIF_MAIL_SSL=false # Uses STARTLS
+      - DIUN_NOTIF_MAIL_USERNAME={{ vault_email.user }}
+      - DIUN_NOTIF_MAIL_PASSWORD={{ vault_email.password }}
+      - DIUN_NOTIF_MAIL_FROM={{ vault_email.from }}
+      - DIUN_NOTIF_MAIL_TO={{ vault_email.to }}
+      - DIUN_PROVIDERS_DOCKER=true
+      - DIUN_PROVIDERS_DOCKERFILE_PATTERNS=/dockerfiles/**/Dockerfile
+      - DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - "{{ diun_data }}:/data"
+{% for item in dockerfiles.files %}
+      - {{ item.path + ':/dockerfiles/' + item.path + ':ro'}}
+{% endfor %}
+    networks:
+      - default
+
+networks:
+  default:
+    name: *name

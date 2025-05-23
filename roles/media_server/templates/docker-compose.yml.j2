@@ -26,7 +26,7 @@ services:
       - *tz
     volumes:
       - *media
-      - bazarr-config:/config
+      - "{{ media_server_bazarr_config }}:/config"
 
   flaresolverr:
     container_name: flaresolverr
@@ -52,7 +52,7 @@ services:
       - DOCKER_MODS=linuxserver/mods:jellyfin-opencl-intel
     volumes:
       - *media
-      - jellyfin-config:/config
+      - "{{ media_server_jellyfin_config }}:/config"
     devices:
       - /dev/dri/renderD128:/dev/dri/renderD128
     group_add:
@@ -71,7 +71,7 @@ services:
     environment:
       - *tz
     volumes:
-      - jellyseerr-config:/app/config
+      - "{{ media_server_jellyseerr_config }}:/app/config"
     networks:
       - default
       - caddy
@@ -88,7 +88,7 @@ services:
       - *pgid
       - *tz
     volumes:
-      - prowlarr-config:/config
+      - "{{ media_server_prowlarr_config }}:/config"
 
   qbittorrent-wireguard:
     container_name: qbittorrent-wireguard
@@ -112,7 +112,7 @@ services:
       - TORRENTING_PORT={{ media_server_vault_wireguard_conf.torrenting_port }}
     volumes:
       - *torrents
-      - qbittorrent-wireguard-config:/config
+      - "{{ media_server_qbittorrent_wireguard_config }}:/config"
     labels:
       - "diun.enable=false"
     privileged: true
@@ -134,7 +134,7 @@ services:
       - *tz
     volumes:
       - *data
-      - radarr-config:/config
+      - "{{ media_server_radarr_config }}:/config"
 
   recyclarr:
     container_name: recyclarr
@@ -145,7 +145,7 @@ services:
       - *tz
       - RECYCLARR_CREATE_CONFIG=true
     volumes:
-      - recyclarr-config:/config
+      - "{{ media_server_recyclarr_config }}:/config"
     user: "{{ ansible_user_uid }}:{{ ansible_user_gid }}"
 
   sonarr:
@@ -161,25 +161,7 @@ services:
       - *tz
     volumes:
       - *data
-      - sonarr-config:/config
-
-volumes:
-  bazarr-config:
-    name: bazarr-config
-  jellyfin-config:
-    name: jellyfin-config
-  jellyseerr-config:
-    name: jellyseerr-config
-  prowlarr-config:
-    name: prowlarr-config
-  qbittorrent-wireguard-config:
-    name: qbittorrent-wireguard-config
-  radarr-config:
-    name: radarr-config
-  recyclarr-config:
-    name: recyclarr-config
-  sonarr-config:
-    name: sonarr-config
+      - "{{ media_server_sonarr_config }}:/config"
 
 networks:
   default:

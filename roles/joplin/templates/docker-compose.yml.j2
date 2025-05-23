@@ -42,15 +42,9 @@ services:
       - POSTGRES_USER=joplin
       - POSTGRES_DB=joplin
     volumes:
-      - joplin-postgres-data:/var/lib/postgresql/data
+      - "{{ joplin_postgres_data }}:/var/lib/postgresql/data"
     ports:
       - 5432:5432
-
-volumes:
-  joplin-config:
-    name: joplin-config
-  joplin-postgres-data:
-    name: joplin-postgres-data
 
 networks:
   default:

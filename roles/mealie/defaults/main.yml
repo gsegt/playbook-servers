@@ -1,3 +1,5 @@
 ---
 mealie_vault_db_password: CHANGE_ME
-mealie_infra: /path/to/infra/
+mealie_infra: /path/to/infra/folder
+mealie_data: /path/to/data/volume
+mealie_postgres_data: /path/to/postgres/data/volume

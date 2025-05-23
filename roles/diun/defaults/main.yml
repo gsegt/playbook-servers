@@ -1,2 +1,4 @@
 ---
+diun_infra: /path/to/diun/infra/folder
+diun_data: /path/to/data/volume
 diun_schedule: 0 0 0 * * * # Every day at 00h00
