@@ -143,7 +143,6 @@ services:
     restart: *restart
     environment:
       - *tz
-      - RECYCLARR_CREATE_CONFIG=true
     volumes:
       - "{{ media_server_recyclarr_config }}:/config"
     user: "{{ ansible_user_uid }}:{{ ansible_user_gid }}"
