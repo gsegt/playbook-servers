@@ -2,6 +2,9 @@
 
 This repository will hold playbooks for my server using ansible.
 
+> [!WARNING]
+> It is now deprecated in favour of my [nixfiles](https://github.com/gsegt/nixfiles)
+
 - [Playbook server](#playbook-server)
   - [Requirements](#requirements)
     - [SSH setup](#ssh-setup)
